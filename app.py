@@ -14,7 +14,7 @@ from footer_utils import image, link, layout, footer
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
-                   page_title="Covid Tika Utilization Tracker Slot Availability")
+                   page_title="Covid Tika Daily Utilization Tracker Slot Availability")
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
@@ -52,7 +52,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 21 May')
-st.info('Tracking daily utilization covid vaccine doses for 45+ group. Status on 21 May 2021 , 4:45-5:00PM ')
+st.info('Tracking daily UnUtilization of Covid-19 vaccine doses for 45+ group. Status as on 21 May 2021 , 4:45-5:00PM from CoWIN ')
 
 valid_states = list(np.unique(mappingdf["state"].values))
 # numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
@@ -72,7 +72,7 @@ with left_column_1:
 
 
 
-st.info('Total UNUTLIZED doses are '+str(sum(df['slots']))+'. Doses utilization % is just '+str(round(sum(df['slots'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
+st.info('Total UNUTILIZED doses are '+str(sum(df['slots']))+'. Doses utilization % is just '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
 df.rename(columns=rename_mapping, inplace=True)
 table = deepcopy(df)
 table.reset_index(inplace=True, drop=True)
