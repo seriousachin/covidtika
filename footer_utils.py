@@ -14,7 +14,7 @@ def layout(*args):
 
     style = """
     <style>
-      # MainMenu {visibility: hidden;}
+      MainMenu {visibility: hidden;}
       footer {visibility: hidden;}
      .stApp { bottom: 70px; }
     </style>
@@ -56,7 +56,8 @@ def footer(inp_views):
     myargs = [
         "Today Page Visits - ", str(inp_views),
         br(),
-        "Created by  Sachin Pandey",
+        "Created by ",
+        link("https://twitter.com/serioussachin", "Sachin Pandey"),
         "     ",
         
     ]
