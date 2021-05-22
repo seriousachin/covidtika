@@ -18,7 +18,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("21.csv",index_col = False)
+    df = pd.read_csv("22.csv",index_col = False)
     return df
 
 
@@ -43,7 +43,7 @@ rename_mapping = {
     'min_age_limit': 'Minimum Age Limit',
     'available_capacity_dose1': 'Available Capacity',
     'vaccine': 'Vaccine',
-    'pincode': 'Pincode',
+    'Total doses til date': 'People vaccinated till date',
     'center': 'No of not fully utilized centers',
     'state' : 'State',
     'district' : 'District',
@@ -51,8 +51,8 @@ rename_mapping = {
     'today' : 'Doses Administered'
     }
 
-st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 21 May')
-st.info('Tracking daily UnUtilization of Covid-19 vaccine doses for 45+ group. Status as on 21 May 2021 , 4:45-5:00PM from CoWIN ')
+st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 22 May')
+st.info('Tracking daily UnUtilization of Covid-19 vaccine doses for 45+ group. Status as on 22 May 2021 , 10:30-11:00PM from CoWIN ')
 
 valid_states = list(np.unique(mappingdf["state"].values))
 # numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
