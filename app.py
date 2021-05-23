@@ -143,7 +143,7 @@ table.reset_index(inplace=True, drop=True)
 
 #fig.show()
 st.table(table)
-
+st.info('Methodology:calculating unutilized doses from available slots(45+)in all districts for the same day from appointment api after 5pm or time duration mentioned and vaccinated people(45+) on that day in all districts from report api of CoWIN portal. So it is prone to error due to api cache & cowin usability by districts and states!')
     
 
 pageviews=Pageviews()
