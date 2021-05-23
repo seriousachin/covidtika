@@ -5,7 +5,7 @@ import requests
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
-import chart_studio.plotly as py
+#import chart_studio.plotly as py
 from copy import deepcopy
 from fake_useragent import UserAgent
 from footer_utils import image, link, layout, footer
