@@ -18,7 +18,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("22.csv",index_col = False)
+    df = pd.read_csv("23.csv",index_col = False)
     return df
 
 
@@ -51,8 +51,8 @@ rename_mapping = {
     'today' : 'Doses Administered'
     }
 
-st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 22 May')
-st.write('Tracking daily UnUtilization of Covid-19 vaccine doses for 45+ group. Status as on 22 May 2021 , 10:30-11:00PM from CoWIN ')
+st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 23 May')
+st.write('Tracking daily UnUtilization of Covid-19 vaccine doses for 45+ group. Status as on 23 May 2021 , 6:15-6:45PM from CoWIN ')
 
 valid_states = list(np.unique(mappingdf["state"].values))
 # numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
@@ -72,7 +72,7 @@ with left_column_1:
 
 
 
-st.header('Total UNUTILIZED doses are '+str(sum(df['slots']))+'. Doses utilization % is just '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
+st.header(str(sum(df['slots']))+' doses went unutilized on 23 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
 df.rename(columns=rename_mapping, inplace=True)
 table = deepcopy(df[['District','Unutilized Doses','Doses Administered','People vaccinated till date']])
 table.reset_index(inplace=True, drop=True)
