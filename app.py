@@ -52,7 +52,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 22 May')
-st.info('Tracking daily UnUtilization of Covid-19 vaccine doses for 45+ group. Status as on 22 May 2021 , 10:30-11:00PM from CoWIN ')
+st.write('Tracking daily UnUtilization of Covid-19 vaccine doses for 45+ group. Status as on 22 May 2021 , 10:30-11:00PM from CoWIN ')
 
 valid_states = list(np.unique(mappingdf["state"].values))
 # numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
@@ -72,43 +72,14 @@ with left_column_1:
 
 
 
-st.info('Total UNUTILIZED doses are '+str(sum(df['slots']))+'. Doses utilization % is just '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
+st.header('Total UNUTILIZED doses are '+str(sum(df['slots']))+'. Doses utilization % is just '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
 df.rename(columns=rename_mapping, inplace=True)
-table = deepcopy(df)
+table = deepcopy(df[['District','Unutilized Doses','Doses Administered','People vaccinated till date']])
 table.reset_index(inplace=True, drop=True)
 st.table(table)
 
     
-# footer="""<style>
-# a:link , a:visited{
-# color: blue;
-# background-color: transparent;
-# text-decoration: underline;
-# }
 
-# a:hover,  a:active {
-# color: red;
-# background-color: transparent;
-# text-decoration: underline;
-# }
-
-# .footer {
-# position: fixed;
-# left: 0;
-# bottom: 0;
-# width: 100%;
-# background-color: white;
-# color: black;
-# text-align: center;
-# }
-# </style>
-# <div class="footer">
-# <p>book hoga</p>
-# </div>
-# """
-# st.markdown(footer,unsafe_allow_html=True)
-# st.markdown("_- Bhavesh Bhatt_")
-#df['available_capacity_dose1'].sum()
 pageviews=Pageviews()
 pageviews.append('dummy')
 pg_views = len(pageviews)
