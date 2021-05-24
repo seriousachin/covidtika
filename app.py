@@ -63,11 +63,19 @@ name_stat=np.unique(mappingdf["state"].values)
 for i in range(0,37):
     dfs=df.loc[df['state'] == name_stat[i]]
     if sum(dfs['slots'])+sum(dfs['today'])>0:
-        ff.append({'state':name_stat[i],'utilization %':round(sum(dfs['today'])*100/(sum(dfs['slots'])+sum(dfs['today'])),2)})
+        ff.append({'state':name_stat[i],'utilization %':round(sum(dfs['today'])*100/(sum(dfs['slots'])+sum(dfs['today'])),2),'vaccinated today':sum(dfs['today']),'7 days daily avg':sum(dfs['avgdaily']),'People vaccinated till date':sum(dfs['Total doses til date'])})
     else:
-        ff.append({'state':name_stat[i],'utilization %':100})    
+        ff.append({'state':name_stat[i],'utilization %':100,'vaccinated today':sum(dfs['today']),'7 days daily avg':sum(dfs['avgdaily']),'People vaccinated till date':sum(dfs['Total doses til date'])})    
 
 dfg = pd.DataFrame(ff)
+for col in dfg.columns:
+    dfg[col] = dfg[col].astype(str)
+
+dfg['text'] = dfg['state'] + '<br>' +\
+'Today Doses Utilization % : ' + dfg['utilization %'] +  '<br>' +\
+'Vaccinated today:' + dfg['vaccinated today'] +  '<br>' +\
+'Last 7 days Daily Avg Vaccination:' + dfg['7 days daily avg'] + '<br>' +\
+'People vaccinated till date:' + dfg['People vaccinated till date']
 
 
 
@@ -76,11 +84,12 @@ fig = go.Figure(data=go.Choropleth(
     featureidkey='properties.ST_NM',
     locationmode='geojson-id',
     locations=dfg['state'],
-    z=dfg['utilization %'],
+    z=dfg['utilization %'].astype(float),
 
     autocolorscale=False,
     colorscale=[[0, 'RGB(153,0,0)'],[0.2, 'RGB(255,51,51)'],[0.4, 'RGB(255,153,153)'],[0.6, 'RGB(255,204,204)'],[0.8, 'RGB(229,255,204)'],[0.9, 'RGB(0,255,0)'], [1, 'RGB(0,102,0)']],
     #color_continuous_scale=["red", "green"],
+    text=dfg['text'], 
     marker_line_color='peachpuff',
     showscale=True,
     colorbar=dict(
