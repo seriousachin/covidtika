@@ -50,14 +50,24 @@ rename_mapping = {
     'state' : 'State',
     'district' : 'District',
     'slots': 'Unutilized Doses',
-    'today' : 'Doses Administered'
+    'today' : 'Doses Administered',
+    'avgdaily': 'Last 7 days Daily Avg Vaccination'
     }
 
 st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 23 May')
 st.write('Tracking daily UnUtilization of Covid-19 vaccine doses for 45+ group. Status as on 23 May 2021 , 6:15-6:45PM from CoWIN. ')
-dfg = pd.read_csv("map.csv")
+#dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
+ff=[]
+name_stat=np.unique(mappingdf["state"].values)
+for i in range(0,37):
+    dfs=df.loc[df['state'] == name_stat[i]]
+    if sum(dfs['slots'])+sum(dfs['today'])>0:
+        ff.append({'state':name_stat[i],'utilization %':round(sum(dfs['today'])*100/(sum(dfs['slots'])+sum(dfs['today'])),2)})
+    else:
+        ff.append({'state':name_stat[i],'utilization %':100})    
 
+dfg = pd.DataFrame(ff)
 
 
 
@@ -69,7 +79,7 @@ fig = go.Figure(data=go.Choropleth(
     z=dfg['utilization %'],
 
     autocolorscale=False,
-    colorscale=[[0, 'RGB(153,0,0)'],[0.2, 'RGB(255,51,51)'],[0.4, 'RGB(255,204,204)'],[0.6, 'RGB(153,255,153)'],[0.8, 'RGB(0,255,0)'], [1, 'RGB(0,102,0)']],
+    colorscale=[[0, 'RGB(153,0,0)'],[0.2, 'RGB(255,51,51)'],[0.4, 'RGB(255,153,153)'],[0.6, 'RGB(255,204,204)'],[0.8, 'RGB(229,255,204)'],[0.9, 'RGB(0,255,0)'], [1, 'RGB(0,102,0)']],
     #color_continuous_scale=["red", "green"],
     marker_line_color='peachpuff',
     showscale=True,
@@ -136,7 +146,7 @@ with left_column_1:
 
 st.header(str(sum(df['slots']))+' doses went unutilized on 23 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
 df.rename(columns=rename_mapping, inplace=True)
-table = deepcopy(df[['District','Unutilized Doses','Doses Administered','People vaccinated till date']])
+table = deepcopy(df[['District','Unutilized Doses','Doses Administered','Last 7 days Daily Avg Vaccination','People vaccinated till date']])
 table.reset_index(inplace=True, drop=True)
 
 #df.to_csv("map.csv",index=False)
