@@ -20,7 +20,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("24.csv",index_col = False)
+    df = pd.read_csv("25.csv",index_col = False)
     return df
 
 
@@ -54,8 +54,8 @@ rename_mapping = {
     'avgdaily': 'Last 7 days Daily Avg Vaccination'
     }
 
-st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 24 May')
-st.write('Tracking daily (non) Utilization of Covid-19 vaccine doses for 45+ group. Status as on 24 May 2021 , 6:05-6:40PM from CoWIN. ')
+st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 25 May')
+st.write('Tracking daily (non) Utilization of Covid-19 vaccine doses for 45+ group. Status as on 25 May 2021 , 6:05-6:45PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -122,7 +122,7 @@ fig.update_geos(
 
 fig.update_layout(
     title=dict(
-        text="Doses utilization for India on 24 May: "+str(uind)+"%.",
+        text="Doses utilization for India on 25 May: "+str(uind)+"%.",
         xanchor='center',
         x=0.5,
         yref='paper',
@@ -144,16 +144,18 @@ with left_column_1:
     state_inp = st.selectbox('Select State', [""] + valid_states)
     if state_inp != "":
         df = filter_column(df, "state", state_inp)
-        #with right_column_1:
-            #dist_inp = st.selectbox('Select District', [""]+unique_districts)
-            #if dist_inp != "":
-                #df = filter_column(df, "district", dist_inp)
+        distf=filter_column(mappingdf,"state", state_inp)
+        unique_districts = list(np.unique(distf["district"].values))
+        with right_column_1:
+            dist_inp = st.selectbox('Select District', [""]+unique_districts)
+            if dist_inp != "":
+                df = filter_column(df, "district", dist_inp)
 
 
 
 
 
-st.header(str(sum(df['slots']))+' doses went unutilized on 24 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
+st.header(str(sum(df['slots']))+' doses went unutilized on 25 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
 df.rename(columns=rename_mapping, inplace=True)
 table = deepcopy(df[['District','Unutilized Doses','Doses Administered','Last 7 days Daily Avg Vaccination','People vaccinated till date']])
 table.reset_index(inplace=True, drop=True)

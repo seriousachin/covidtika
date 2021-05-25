@@ -17,9 +17,7 @@ def layout(*args):
       #MainMenu {visibility: hidden;}
       footer {visibility: hidden;}
      .stApp { bottom: 70px; }
-        table {
-        font-size: 10px;
-        }
+        
         
     </style>
     """
