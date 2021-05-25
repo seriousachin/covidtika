@@ -5,6 +5,7 @@ import requests
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
+import plotly.express as px
 #import chart_studio.plotly as py
 from copy import deepcopy
 from fake_useragent import UserAgent
@@ -134,6 +135,20 @@ fig.update_layout(
     height=750,
     width=750
 )
+st.plotly_chart(fig)
+ad=[]
+ad.append({'Last 7 days daily avg':'Less than 500',
+     'No of Districts':df[df['avgdaily']<500].count()[1]})
+ad.append({'Last 7 days daily avg':'Between 500-1000',
+     'No of Districts':df[df['avgdaily']<1000 ].count()[1]-df[df['avgdaily']<=500].count()[1]})
+ad.append({'Last 7 days daily avg':'Between 1000-5000',
+     'No of Districts':df[df['avgdaily']<5000 ].count()[1]-df[df['avgdaily']<=1000].count()[1]})
+ad.append({'Last 7 days daily avg':'More than 5000',
+     'No of Districts':df[df['avgdaily']>=5000 ].count()[1]})
+ad=pd.DataFrame(ad)
+#fig = px.bar(ad, x='Last 7 days daily avg', y='No of Districts')
+#fig.update_traces(textposition='outside')
+fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='No of Districts: Last 7 days daily avg vaccinated people(45+ group)')
 st.plotly_chart(fig)
 valid_states = list(np.unique(mappingdf["state"].values))
 # numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
