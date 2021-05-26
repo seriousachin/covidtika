@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("25.csv",index_col = False)
+    df = pd.read_csv("26.csv",index_col = False)
     return df
 
 
@@ -55,8 +55,8 @@ rename_mapping = {
     'avgdaily': 'Last 7 days Daily Avg Vaccination'
     }
 
-st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 25 May')
-st.write('Tracking daily (non) Utilization of Covid-19 vaccine doses for 45+ group. Status as on 25 May 2021 , 6:05-6:45PM from CoWIN. ')
+st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 26 May')
+st.write('Tracking daily (non) Utilization of Covid-19 vaccine doses for 45+ group. Status as on 26 May 2021 , 6:05-6:45PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -123,7 +123,7 @@ fig.update_geos(
 
 fig.update_layout(
     title=dict(
-        text="Doses utilization for India on 25 May: "+str(uind)+"%.",
+        text="Doses utilization for India on 26 May: "+str(uind)+"%.",
         xanchor='center',
         x=0.5,
         yref='paper',
@@ -135,6 +135,7 @@ fig.update_layout(
     height=750,
     width=750
 )
+
 st.plotly_chart(fig)
 ad=[]
 ad.append({'Last 7 days daily avg':'Less than 200',
@@ -160,6 +161,11 @@ fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='N
                                  'Between 2000-5000':'RGB(229,255,204)',
                                  'More than 5000':'RGB(0,102,0)'})
 fig.update_traces(hoverinfo='label+percent', textinfo='value')
+fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN',
+                              font_size = 16,
+                              showarrow = False,
+                              xref = 'paper', x = 0,
+                              yref = 'paper', y = -0.3)
 st.plotly_chart(fig)
 valid_states = list(np.unique(mappingdf["state"].values))
 # numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
@@ -181,7 +187,7 @@ with left_column_1:
 
 
 
-st.header(str(sum(df['slots']))+' doses went unutilized on 25 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
+st.header(str(sum(df['slots']))+' doses went unutilized on 26 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
 df.rename(columns=rename_mapping, inplace=True)
 table = deepcopy(df[['District','Unutilized Doses','Doses Administered','Last 7 days Daily Avg Vaccination','People vaccinated till date']])
 table.reset_index(inplace=True, drop=True)
