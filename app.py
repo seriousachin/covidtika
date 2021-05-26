@@ -137,18 +137,29 @@ fig.update_layout(
 )
 st.plotly_chart(fig)
 ad=[]
-ad.append({'Last 7 days daily avg':'Less than 500',
-     'No of Districts':df[df['avgdaily']<500].count()[1]})
+ad.append({'Last 7 days daily avg':'Less than 200',
+     'No of Districts':df[df['avgdaily']<200].count()[1]})
+ad.append({'Last 7 days daily avg':'Between 200-500',
+     'No of Districts':df[df['avgdaily']<500].count()[1]-df[df['avgdaily']<=200].count()[1]})
 ad.append({'Last 7 days daily avg':'Between 500-1000',
      'No of Districts':df[df['avgdaily']<1000 ].count()[1]-df[df['avgdaily']<=500].count()[1]})
-ad.append({'Last 7 days daily avg':'Between 1000-5000',
-     'No of Districts':df[df['avgdaily']<5000 ].count()[1]-df[df['avgdaily']<=1000].count()[1]})
+ad.append({'Last 7 days daily avg':'Between 1000-2000',
+     'No of Districts':df[df['avgdaily']<2000 ].count()[1]-df[df['avgdaily']<=1000].count()[1]})
+ad.append({'Last 7 days daily avg':'Between 2000-5000',
+     'No of Districts':df[df['avgdaily']<5000 ].count()[1]-df[df['avgdaily']<=2000].count()[1]})
 ad.append({'Last 7 days daily avg':'More than 5000',
      'No of Districts':df[df['avgdaily']>=5000 ].count()[1]})
 ad=pd.DataFrame(ad)
 #fig = px.bar(ad, x='Last 7 days daily avg', y='No of Districts')
 #fig.update_traces(textposition='outside')
-fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='No of Districts: Last 7 days daily avg vaccinated people(45+ group)')
+
+fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='No of Districts: Last 7 days daily avg vaccinated people(45+ group)',color='Last 7 days daily avg', color_discrete_map={'Less than 200':'RGB(153,0,0)',
+                                 'Between 200-500':'RGB(255,51,51)',
+                                 'Between 500-1000':'RGB(255,153,153)',
+                                 'Between 1000-2000':'RGB(255,204,204)',
+                                 'Between 2000-5000':'RGB(229,255,204)',
+                                 'More than 5000':'RGB(0,102,0)'})
+fig.update_traces(hoverinfo='label+percent', textinfo='value')
 st.plotly_chart(fig)
 valid_states = list(np.unique(mappingdf["state"].values))
 # numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
