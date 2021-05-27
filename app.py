@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("26.csv",index_col = False)
+    df = pd.read_csv("27.csv",index_col = False)
     return df
 
 
@@ -55,8 +55,8 @@ rename_mapping = {
     'avgdaily': 'Last 7 days Daily Avg Vaccination'
     }
 
-st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 26 May')
-st.write('Tracking daily (non) Utilization of Covid-19 vaccine doses for 45+ group. Status as on 26 May 2021 , 6:05-6:45PM from CoWIN. ')
+st.title('Covid Tika Daily Utilization Tracker for 45+ Group: 27 May')
+st.write('Tracking daily (non) Utilization of Covid-19 vaccine doses for 45+ group. Status as on 27 May 2021 , 6:35-7:45PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -69,6 +69,9 @@ for i in range(0,37):
         ff.append({'state':name_stat[i],'utilization %':100,'vaccinated today':sum(dfs['today']),'7 days daily avg':sum(dfs['avgdaily']),'People vaccinated till date':sum(dfs['Total doses til date'])})    
 
 dfg = pd.DataFrame(ff)
+#table = deepcopy(dfg[['state','7 days daily avg','People vaccinated till date']])
+#table.reset_index(inplace=True, drop=True)
+#st.table(table)
 for col in dfg.columns:
     dfg[col] = dfg[col].astype(str)
 
@@ -123,7 +126,7 @@ fig.update_geos(
 
 fig.update_layout(
     title=dict(
-        text="Doses utilization for India on 26 May: "+str(uind)+"%.",
+        text="Doses utilization for India on 27 May: "+str(uind)+"%.",
         xanchor='center',
         x=0.5,
         yref='paper',
@@ -187,7 +190,7 @@ with left_column_1:
 
 
 
-st.header(str(sum(df['slots']))+' doses went unutilized on 26 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%.')
+st.header(str(sum(df['slots']))+' doses went unutilized on 27 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%. '#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
 df.rename(columns=rename_mapping, inplace=True)
 table = deepcopy(df[['District','Unutilized Doses','Doses Administered','Last 7 days Daily Avg Vaccination','People vaccinated till date']])
 table.reset_index(inplace=True, drop=True)
