@@ -190,7 +190,7 @@ with left_column_1:
 
 
 
-st.header(str(sum(df['slots']))+' doses went unutilized on 27 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%. '#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
+st.header(str(sum(df['slots']))+' doses went unutilized on 27 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%. ')#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
 df.rename(columns=rename_mapping, inplace=True)
 table = deepcopy(df[['District','Unutilized Doses','Doses Administered','Last 7 days Daily Avg Vaccination','People vaccinated till date']])
 table.reset_index(inplace=True, drop=True)
