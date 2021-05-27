@@ -64,13 +64,13 @@ name_stat=np.unique(mappingdf["state"].values)
 pp=[105669,15897000,372210,8113000,24447000,293781,6955000,141600,80500,5183000,401941,18165000,7177000,2264000,3279000,8395000,18903000,12782000,73245,18467,18965000,35159000,731563,796807,293638,533386,12778000,358310,8924000,17351000,163478,24993000,10372000,987290,47793000,2848000,28410000]
 uind={'Doses utilization %':round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2),
      '% of 45+ people vaccinated':round(100*sum(df['Total doses til date'])/sum(pp),2),
-     'Last 7 days avg per 100 45+ people':round(100*sum(df['avgdaily'])/sum(pp),2)}
+     'Last 7 days avg per 100 people(45+)':round(100*sum(df['avgdaily'])/sum(pp),2)}
 for i in range(0,37):
     dfs=df.loc[df['state'] == name_stat[i]]
     if sum(dfs['slots'])+sum(dfs['today'])>0:
-        ff.append({'state':name_stat[i],'Doses utilization %':round(sum(dfs['today'])*100/(sum(dfs['slots'])+sum(dfs['today'])),2),'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 45+ people':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date'])})
+        ff.append({'state':name_stat[i],'Doses utilization %':round(sum(dfs['today'])*100/(sum(dfs['slots'])+sum(dfs['today'])),2),'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date'])})
     else:
-        ff.append({'state':name_stat[i],'Doses utilization %':100,'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 45+ people':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date'])})    
+        ff.append({'state':name_stat[i],'Doses utilization %':100,'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date'])})    
 
 dfg = pd.DataFrame(ff)
 #table = deepcopy(dfg[['state','7 days daily avg','People vaccinated till date']])
@@ -82,7 +82,7 @@ for col in dfg.columns:
 dfg['text'] = dfg['state'] + '<br>' +\
 'Today Doses Utilization % : ' + dfg['Doses utilization %'] +  '<br>' +\
 'Vaccinated today:' + dfg['vaccinated today'] +  '<br>' +\
-'Last 7 days avg per 100 45+ people:' + dfg['Last 7 days avg per 100 45+ people'] + '<br>' +\
+'Last 7 days avg per 100 people(45+):' + dfg['Last 7 days avg per 100 people(45+)'] + '<br>' +\
 'Last 7 days Daily Avg Vaccination:' + dfg['7 days daily avg'] + '<br>' +\
 '% of 45+ people vaccinated:' + dfg['% of 45+ people vaccinated'] + '<br>' +\
 'People vaccinated till date:' + dfg['People vaccinated till date']
@@ -99,18 +99,20 @@ def dashh(val):
         autocolorscale=False,
         colorscale=[[0, 'RGB(153,0,0)'],[0.2, 'RGB(255,51,51)'],[0.4, 'RGB(255,153,153)'],[0.6, 'RGB(255,204,204)'],[0.8, 'RGB(229,255,204)'],[0.9, 'RGB(0,255,0)'], [1, 'RGB(0,102,0)']],
         #color_continuous_scale=["red", "green"],
-        text=dfg['text'], 
+        text=dfg[val], 
+        hovertext=dfg['text'],
+        
         marker_line_color='peachpuff',
         showscale=True,
         colorbar=dict(
             title={'text': val},
 
-            thickness=15,
+            #thickness=15,
             len=0.35,
             bgcolor='rgba(255,255,255,0.6)',
 
-            tick0=0.0,
-            dtick=10,
+            tick0=0,
+            dtick=max(dfg[val].astype(float))/10,
 
             xanchor='left',
             x=0.01,
@@ -131,7 +133,7 @@ def dashh(val):
     )
     #fig1.update_traces( textinfo='value')
 
-    fig1.update_layout(
+    fig1.update_layout(#text=dfg[val], 
         title=dict(
             text=val+" for India on 27 May: "+str(uind[val]),
             xanchor='center',
@@ -149,7 +151,7 @@ def dashh(val):
 fig1=dashh('Doses utilization %')
 left_column_2, right_column_2 = st.beta_columns(2)
 with left_column_2:
-    val = st.selectbox('Select parameter', ['Doses utilization %','% of 45+ people vaccinated','Last 7 days avg per 100 45+ people'])
+    val = st.selectbox('Select parameter', ['Doses utilization %','% of 45+ people vaccinated','Last 7 days avg per 100 people(45+)'])
     fig1=dashh(val)
 st.plotly_chart(fig1)
 ad=[]
