@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("29.csv",index_col = False)
+    df = pd.read_csv("30.csv",index_col = False)
     return df
 
 
@@ -59,8 +59,8 @@ rename_mapping = {
     'avgdaily 18-44': 'Last 7 days Daily Avg Vaccination(18-44)'
     }
 
-st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : 29 May')
-st.write('Tracking daily (non) Utilization, Coverage, Speed, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 29 May 2021 , 7:20-8:00PM from CoWIN. ')
+st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : 30 May')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 30 May 2021 , 7:40-8:20PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -74,13 +74,18 @@ uind={'Doses(45+) utilization %':round(sum(df['today'])*100.00/ (sum(df['today']
      'Last 7 days avg per 100 people(45+)':round(100*sum(df['avgdaily'])/sum(pp),2),
       'Doses(18-44) utilization %':round(sum(df['today 18'])*100.00/ (sum(df['today 18'])+sum(df['slots 18-44'])),2),
      '% of 18-44 people vaccinated':round(100*sum(df['Total doses til date 18'])/sum(pp1),2),
-     'Last 7 days avg per 100 people(18-44)':round(100*sum(df['avgdaily 18-44'])/sum(pp1),2)}
+     'Last 7 days avg per 100 people(18-44)':round(100*sum(df['avgdaily 18-44'])/sum(pp1),2),
+     'Today Dose wastage %':round(100*sum(df['wastage'])/(sum(df['today 18'])+sum(df['today'])),2)}
 for i in range(0,37):
     dfs=df.loc[df['state'] == name_stat[i]]
-    if sum(dfs['slots'])+sum(dfs['today'])>0:
-        ff.append({'state':name_stat[i],'Doses(45+) utilization %':round(sum(dfs['today'])*100/(sum(dfs['slots'])+sum(dfs['today'])),2),'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),'Doses(18-44) utilization %':round(sum(dfs['today 18'])*100.00/ (sum(dfs['today 18'])+sum(dfs['slots 18-44'])),2),'vaccinated today 18-44':sum(dfs['today 18']),'Last 7 days avg per 100 people(18-44)':round(100*sum(dfs['avgdaily 18-44'])/pp1[i],2),'7 days daily avg 18-44':sum(dfs['avgdaily 18-44']),'% of 18-44 people vaccinated':round(100*sum(dfs['Total doses til date 18'])/pp1[i],2) ,'People(18-44) vaccinated till date':sum(dfs['Total doses til date 18'])})
+    if sum(dfs['slots'])+sum(dfs['today'])==0 and sum(dfs['slots 18-44'])+sum(dfs['today 18'])==0:
+        ff.append({'state':name_stat[i],'Doses(45+) utilization %':100,'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),'Doses(18-44) utilization %':100,'vaccinated today 18-44':sum(dfs['today 18']),'Last 7 days avg per 100 people(18-44)':round(100*sum(dfs['avgdaily 18-44'])/pp1[i],2),'7 days daily avg 18-44':sum(dfs['avgdaily 18-44']),'% of 18-44 people vaccinated':round(100*sum(dfs['Total doses til date 18'])/pp1[i],2) ,'People(18-44) vaccinated till date':sum(dfs['Total doses til date 18'])})
+    elif sum(dfs['slots'])+sum(dfs['today'])==0:
+        ff.append({'state':name_stat[i],'Doses(45+) utilization %':100,'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),'Doses(18-44) utilization %':round(sum(dfs['today 18'])*100.00/ (sum(dfs['today 18'])+sum(dfs['slots 18-44'])),2),'vaccinated today 18-44':sum(dfs['today 18']),'Last 7 days avg per 100 people(18-44)':round(100*sum(dfs['avgdaily 18-44'])/pp1[i],2),'7 days daily avg 18-44':sum(dfs['avgdaily 18-44']),'% of 18-44 people vaccinated':round(100*sum(dfs['Total doses til date 18'])/pp1[i],2) ,'People(18-44) vaccinated till date':sum(dfs['Total doses til date 18'])})
+    elif sum(dfs['slots 18-44'])+sum(dfs['today 18'])==0:
+        ff.append({'state':name_stat[i],'Doses(45+) utilization %':round(sum(dfs['today'])*100/(sum(dfs['slots'])+sum(dfs['today'])),2),'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),'Doses(18-44) utilization %':100,'vaccinated today 18-44':sum(dfs['today 18']),'Last 7 days avg per 100 people(18-44)':round(100*sum(dfs['avgdaily 18-44'])/pp1[i],2),'7 days daily avg 18-44':sum(dfs['avgdaily 18-44']),'% of 18-44 people vaccinated':round(100*sum(dfs['Total doses til date 18'])/pp1[i],2) ,'People(18-44) vaccinated till date':sum(dfs['Total doses til date 18'])})
     else:
-        ff.append({'state':name_stat[i],'Doses(45+) utilization %':100,'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),'Doses(18-44) utilization %':round(sum(dfs['today 18'])*100.00/ (sum(dfs['today 18'])+sum(dfs['slots 18-44'])),2),'vaccinated today 18-44':sum(dfs['today 18']),'Last 7 days avg per 100 people(18-44)':round(100*sum(dfs['avgdaily 18-44'])/pp1[i],2),'7 days daily avg 18-44':sum(dfs['avgdaily 18-44']),'% of 18-44 people vaccinated':round(100*sum(dfs['Total doses til date 18'])/pp1[i],2) ,'People(18-44) vaccinated till date':sum(dfs['Total doses til date 18'])})    
+        ff.append({'state':name_stat[i],'Doses(45+) utilization %':round(sum(dfs['today'])*100/(sum(dfs['slots'])+sum(dfs['today'])),2),'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),'Doses(18-44) utilization %':round(sum(dfs['today 18'])*100.00/ (sum(dfs['today 18'])+sum(dfs['slots 18-44'])),2),'vaccinated today 18-44':sum(dfs['today 18']),'Last 7 days avg per 100 people(18-44)':round(100*sum(dfs['avgdaily 18-44'])/pp1[i],2),'7 days daily avg 18-44':sum(dfs['avgdaily 18-44']),'% of 18-44 people vaccinated':round(100*sum(dfs['Total doses til date 18'])/pp1[i],2) ,'People(18-44) vaccinated till date':sum(dfs['Total doses til date 18'])})
 
 dfg = pd.DataFrame(ff)
 #table = deepcopy(dfg[['state','7 days daily avg','People vaccinated till date']])
@@ -108,6 +113,10 @@ dfg['text18'] = dfg['state'] + '<br>' +\
 def dashh(val):
     if (val=='% of 18-44 people vaccinated' or val=='Last 7 days avg per 100 people(18-44)' or val=='Doses(18-44) utilization %' ):
         dfg['text']=dfg['text18']
+    #if val=='Today Dose wastage %':
+        #cs=True
+    #else:
+        #cs=False
     fig1 = go.Figure(data=go.Choropleth(
         geojson="https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson",
         featureidkey='properties.ST_NM',
@@ -123,6 +132,8 @@ def dashh(val):
         
         marker_line_color='peachpuff',
         showscale=True,
+        #if val=='Today Dose wastage %':
+        #reversescale=cs,
         colorbar=dict(
             title={'text': val},
 
@@ -154,7 +165,7 @@ def dashh(val):
 
     fig1.update_layout(#text=dfg[val], 
         title=dict(
-            text=val+" for India on 29 May: "+str(uind[val]),
+            text=val+" for India on 30 May: "+str(uind[val]),
             xanchor='center',
             x=0.5,
             yref='paper',
@@ -197,7 +208,7 @@ fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='N
                                  'Between 2000-5000':'RGB(229,255,204)',
                                  'More than 5000':'RGB(0,102,0)'})
 fig.update_traces(hoverinfo='label+percent', textinfo='value')
-fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN,29 May',
+fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN,30 May',
                               font_size = 16,
                               showarrow = False,
                               xref = 'paper', x = 0,
@@ -227,7 +238,7 @@ fig18 = px.pie(ad18,values='No of Districts', names='Last 7 days daily avg',titl
                                  'Between 2000-5000':'RGB(229,255,204)',
                                  'More than 5000':'RGB(0,102,0)'})
 fig18.update_traces(hoverinfo='label+percent', textinfo='value')
-fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN,29 May',
+fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN,30 May',
                               font_size = 16,
                               showarrow = False,
                               xref = 'paper', x = 0,
@@ -258,7 +269,7 @@ with left_column_1:
 
 
 
-st.header(str(sum(df['slots']))+' doses(45 group) went unutilized on 29 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%. ')#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
+st.header(str(sum(df['slots']))+' doses(45 group) went unutilized on 30 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%. ')#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
 df.rename(columns=rename_mapping, inplace=True)
 table = deepcopy(df[['District','Unutilized Doses(45+)','Doses Administered(45+)','Last 7 days Daily Avg Vaccination(45+)','People(45+) vaccinated till date','Unutilized Doses(18-44)','Doses Administered(18-44)','Last 7 days Daily Avg Vaccination(18-44)','People(18-44) vaccinated till date']])
 table.reset_index(inplace=True, drop=True)
