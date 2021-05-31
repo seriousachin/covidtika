@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("30.csv",index_col = False)
+    df = pd.read_csv("31.csv",index_col = False)
     return df
 
 
@@ -59,8 +59,8 @@ rename_mapping = {
     'avgdaily 18-44': 'Last 7 days Daily Avg Vaccination(18-44)'
     }
 
-st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : 30 May')
-st.write('Tracking daily (non) Utilization, Coverage, Speed, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 30 May 2021 , 7:40-8:20PM from CoWIN. ')
+st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : 31 May')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 31 May 2021 , 7:05-7:50PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -165,7 +165,7 @@ def dashh(val):
 
     fig1.update_layout(#text=dfg[val], 
         title=dict(
-            text=val+" for India on 30 May: "+str(uind[val]),
+            text=val+" for India on 31 May: "+str(uind[val]),
             xanchor='center',
             x=0.5,
             yref='paper',
@@ -198,9 +198,6 @@ ad.append({'Last 7 days daily avg':'Between 2000-5000',
 ad.append({'Last 7 days daily avg':'More than 5000',
      'No of Districts':df[df['avgdaily']>=5000 ].count()[1]})
 ad=pd.DataFrame(ad)
-#fig = px.bar(ad, x='Last 7 days daily avg', y='No of Districts')
-#fig.update_traces(textposition='outside')
-
 fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='No of Districts: Last 7 days daily avg vaccinated people(45+ group)',color='Last 7 days daily avg', color_discrete_map={'Less than 200':'RGB(153,0,0)',
                                  'Between 200-500':'RGB(255,51,51)',
                                  'Between 500-1000':'RGB(255,153,153)',
@@ -208,8 +205,8 @@ fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='N
                                  'Between 2000-5000':'RGB(229,255,204)',
                                  'More than 5000':'RGB(0,102,0)'})
 fig.update_traces(hoverinfo='label+percent', textinfo='value')
-fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN,30 May',
-                              font_size = 16,
+fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN,31 May',
+                              font_size = 10,
                               showarrow = False,
                               xref = 'paper', x = 0,
                               yref = 'paper', y = -0.3)
@@ -238,8 +235,8 @@ fig18 = px.pie(ad18,values='No of Districts', names='Last 7 days daily avg',titl
                                  'Between 2000-5000':'RGB(229,255,204)',
                                  'More than 5000':'RGB(0,102,0)'})
 fig18.update_traces(hoverinfo='label+percent', textinfo='value')
-fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN,30 May',
-                              font_size = 16,
+fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN,31 May',
+                              font_size = 10,
                               showarrow = False,
                               xref = 'paper', x = 0,
                               yref = 'paper', y = -0.3)
@@ -249,11 +246,12 @@ st.plotly_chart(fig18)
     #val = st.selectbox('Select parameter', ['% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)'])
     #fig2=dashh(val)
 #st.plotly_chart(fig2)
+st.header('State and District wise Data')
 valid_states = list(np.unique(mappingdf["state"].values))
 # numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
 #unique_districts = list(mappingdf["district"].unique())
 #unique_districts.sort()
-left_column_1, right_column_1 = st.beta_columns(2)
+left_column_1, center_column_1,right_column_1 = st.beta_columns(3)
 with left_column_1:
     state_inp = st.selectbox('Select State', [""] + valid_states)
     if state_inp != "":
@@ -269,14 +267,16 @@ with left_column_1:
 
 
 
-st.header(str(sum(df['slots']))+' doses(45 group) went unutilized on 30 May. Doses utilization: '+str(round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2))+'%. ')#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
+st.write(str(sum(df['slots']))+' doses(45 group) and '+str(sum(df['slots 18-44']))+' doses(18-44 group) went unutilized on 31 May. ')#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
 df.rename(columns=rename_mapping, inplace=True)
+with center_column_1:
+    sort_inp = st.selectbox('Sort by', ['Unutilized Doses(45+)','Doses Administered(45+)','Last 7 days Daily Avg Vaccination(45+)','People(45+) vaccinated till date','Unutilized Doses(18-44)','Doses Administered(18-44)','Last 7 days Daily Avg Vaccination(18-44)','People(18-44) vaccinated till date'] )
+    if sort_inp != "":
+        df= df.sort_values(by=sort_inp, ascending=False)
+    
 table = deepcopy(df[['District','Unutilized Doses(45+)','Doses Administered(45+)','Last 7 days Daily Avg Vaccination(45+)','People(45+) vaccinated till date','Unutilized Doses(18-44)','Doses Administered(18-44)','Last 7 days Daily Avg Vaccination(18-44)','People(18-44) vaccinated till date']])
 table.reset_index(inplace=True, drop=True)
 
-#df.to_csv("map.csv",index=False)
-
-#fig.show()
 st.table(table)
 st.info('Methodology:calculating unutilized doses from available slots in all districts for the same day from appointment api after 5pm or time duration mentioned and vaccinated people on that day in all districts from report api of CoWIN portal. So it is prone to error due to api cache & cowin usability by districts and states!')
     

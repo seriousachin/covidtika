@@ -57,8 +57,8 @@ def layout(*args):
 def footer(inp_views):
     myargs = [
         "Created by  ",
-        link("https://twitter.com/serioussachin", "Sachin Pandey"),
-        "     ",
+        link("https://twitter.com/serioussachin", "Sachin Pandey"),"   ","  ",
+        link("upi://pay?pa=sachinpandey@apl&pn=SachinPandey&cu=INR","Buy me  a cup of tea? upi: sachinpandey@apl"), " "
         
     ]
     layout(*myargs)
