@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("61.csv",index_col = False)
+    df = pd.read_csv("62.csv",index_col = False)
     return df
 
 
@@ -59,8 +59,8 @@ rename_mapping = {
     'avgdaily 18-44': 'Last 7 days Daily Avg Vaccination(18-44)'
     }
 
-st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : 1 June')
-st.write('Tracking daily (non) Utilization, Coverage, Speed, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 1 June 2021 , 7:05-7:50PM from CoWIN. ')
+st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : 2 June')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 2 June 2021 , 9:05-9:50PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -165,7 +165,7 @@ def dashh(val):
 
     fig1.update_layout(#text=dfg[val], 
         title=dict(
-            text=val+" for India on 1 June: "+str(uind[val]),
+            text=val+" for India on 2 June: "+str(uind[val]),
             xanchor='center',
             x=0.5,
             yref='paper',
@@ -205,7 +205,7 @@ fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='N
                                  'Between 2000-5000':'RGB(229,255,204)',
                                  'More than 5000':'RGB(0,102,0)'})
 fig.update_traces(hoverinfo='label+percent', textinfo='value')
-fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, 1 June',
+fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, 2 June',
                               font_size = 10,
                               showarrow = False,
                               xref = 'paper', x = 0,
@@ -235,7 +235,7 @@ fig18 = px.pie(ad18,values='No of Districts', names='Last 7 days daily avg',titl
                                  'Between 2000-5000':'RGB(229,255,204)',
                                  'More than 5000':'RGB(0,102,0)'})
 fig18.update_traces(hoverinfo='label+percent', textinfo='value')
-fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, 1 June',
+fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, 2 June',
                               font_size = 10,
                               showarrow = False,
                               xref = 'paper', x = 0,
@@ -267,7 +267,7 @@ with left_column_1:
 
 
 
-st.write(str(sum(df['slots']))+' doses(45 group) and '+str(sum(df['slots 18-44']))+' doses(18-44 group) went unutilized on 1 June. ')#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
+st.write(str(sum(df['slots']))+' doses(45 group) and '+str(sum(df['slots 18-44']))+' doses(18-44 group) went unutilized on 2 June. ')#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
 df.rename(columns=rename_mapping, inplace=True)
 with center_column_1:
     sort_inp = st.selectbox('Sort by', ['Unutilized Doses(45+)','Doses Administered(45+)','Last 7 days Daily Avg Vaccination(45+)','People(45+) vaccinated till date','Unutilized Doses(18-44)','Doses Administered(18-44)','Last 7 days Daily Avg Vaccination(18-44)','People(18-44) vaccinated till date'] )
