@@ -191,7 +191,8 @@ def dashh(val):
     )],
         margin={'r': 0, 't': 30, 'l': 0, 'b': 0},
         height=750,
-        width=750
+        width=750,
+        dragmode=False 
     )
     return fig1
 fig1=dashh('Doses(45+) utilization %')
