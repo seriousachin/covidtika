@@ -178,7 +178,7 @@ def dashh(val):
             x=0.5,
             yref='paper',
             yanchor='bottom',
-            y=1,
+            y=0.93,
             pad={'b': 10}
         ),
          annotations = [dict(
@@ -230,7 +230,7 @@ fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herok
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
 fig.update_layout(title_x=0.5)
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig)
 ad18=[]
 ad18.append({'Last 7 days daily avg':'Less than 200',
      'No of Districts':df[df['avgdaily 18-44']<200].count()[1]})
@@ -280,7 +280,7 @@ fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.her
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
 fig18.update_layout(title_x=0.5)
-st.plotly_chart(fig18, use_container_width=True)
+st.plotly_chart(fig18)
 figg = px.pie(adg,values='No of Districts', names='Female vaccinated per 1000 male',title='No of Districts: Female vaccinated per 1000 male',color='Female vaccinated per 1000 male', color_discrete_map={'Less than 600':'RGB(153,0,0)',
                                  'Between 600-700':'RGB(255,51,51)',
                                  'Between 700-800':'RGB(255,153,153)',
@@ -295,7 +295,7 @@ figg.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.hero
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
 figg.update_layout(title_x=0.5)
-st.plotly_chart(figg, use_container_width=True)
+st.plotly_chart(figg)
 #left_column_3, right_column_3 = st.beta_columns(2)
 #with left_column_3:
     #val = st.selectbox('Select parameter', ['% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)'])
