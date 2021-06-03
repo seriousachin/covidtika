@@ -244,6 +244,22 @@ ad18.append({'Last 7 days daily avg':'Between 5000-10000',
 ad18.append({'Last 7 days daily avg':'More than 10000',
      'No of Districts':df[df['avgdaily 18-44']>=10000 ].count()[1]})
 ad18=pd.DataFrame(ad18)
+adg=[]
+adg.append({'Female vaccinated per 1000 male':'Less than 600',
+     'No of Districts':df[df['gratio']<600].count()[1]})
+adg.append({'Female vaccinated per 1000 male':'Between 600-700',
+     'No of Districts':df[df['gratio']<700].count()[1]-df[df['gratio']<=600].count()[1]})
+adg.append({'Female vaccinated per 1000 male':'Between 700-800',
+     'No of Districts':df[df['gratio']<800 ].count()[1]-df[df['gratio']<=700].count()[1]})
+adg.append({'Female vaccinated per 1000 male':'Between 800-900',
+     'No of Districts':df[df['gratio']<900 ].count()[1]-df[df['gratio']<=800].count()[1]})
+adg.append({'Female vaccinated per 1000 male':'Between 900-950',
+     'No of Districts':df[df['gratio']<950 ].count()[1]-df[df['gratio']<=900].count()[1]})
+adg.append({'Female vaccinated per 1000 male':'Between 950-1000',
+     'No of Districts':df[df['gratio']<1000 ].count()[1]-df[df['gratio']<=950].count()[1]})
+adg.append({'Female vaccinated per 1000 male':'More than 1000',
+     'No of Districts':df[df['gratio']>=1000 ].count()[1]})
+adg=pd.DataFrame(adg)
 #fig = px.bar(ad, x='Last 7 days daily avg', y='No of Districts')
 #fig.update_traces(textposition='outside')
 
@@ -261,6 +277,20 @@ fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.her
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
 st.plotly_chart(fig18)
+figg = px.pie(adg,values='No of Districts', names='Female vaccinated per 1000 male',title='No of Districts: Female vaccinated per 1000 male',color='Female vaccinated per 1000 male', color_discrete_map={'Less than 600':'RGB(153,0,0)',
+                                 'Between 600-700':'RGB(255,51,51)',
+                                 'Between 700-800':'RGB(255,153,153)',
+                                 'Between 800-900':'RGB(255,204,204)',
+                                 'Between 900-950':'RGB(229,255,204)',
+                                 'Between 9500-1000':'RGB(0,255,0)',
+                                 'More than 1000':'RGB(0,102,0)'})
+figg.update_traces(hoverinfo='label+percent', textinfo='value')
+figg.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, 2 June',
+                              font_size = 10,
+                              showarrow = False,
+                              xref = 'paper', x = 0.5,
+                              yref = 'paper', y = -0.05)
+st.plotly_chart(figg)
 #left_column_3, right_column_3 = st.beta_columns(2)
 #with left_column_3:
     #val = st.selectbox('Select parameter', ['% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)'])
