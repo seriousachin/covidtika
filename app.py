@@ -229,7 +229,7 @@ fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herok
                               showarrow = False,
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
-figg.update_layout(title_x=0.5)
+fig.update_layout(title_x=0.5)
 st.plotly_chart(fig, use_container_width=True)
 ad18=[]
 ad18.append({'Last 7 days daily avg':'Less than 200',
@@ -279,7 +279,7 @@ fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.her
                               showarrow = False,
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
-figg.update_layout(title_x=0.5)
+fig18.update_layout(title_x=0.5)
 st.plotly_chart(fig18, use_container_width=True)
 figg = px.pie(adg,values='No of Districts', names='Female vaccinated per 1000 male',title='No of Districts: Female vaccinated per 1000 male',color='Female vaccinated per 1000 male', color_discrete_map={'Less than 600':'RGB(153,0,0)',
                                  'Between 600-700':'RGB(255,51,51)',
