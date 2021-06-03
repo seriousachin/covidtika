@@ -199,7 +199,7 @@ left_column_2, right_column_2 = st.beta_columns(2)
 with left_column_2:
     val = st.selectbox('Select parameter', ['Doses(45+) utilization %','% of 45+ people vaccinated','Last 7 days avg per 100 people(45+)','Doses(18-44) utilization %','% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)','Female vaccinated per 1000 male'])
     fig1=dashh(val)
-st.plotly_chart(fig1, use_container_width=True)
+st.plotly_chart(fig1)
 ad=[]
 ad.append({'Last 7 days daily avg':'Less than 200',
      'No of Districts':df[df['avgdaily']<200].count()[1]})
