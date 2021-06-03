@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-
+td='3 June'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("62.csv",index_col = False)
+    df = pd.read_csv("63.csv",index_col = False)
     return df
 
 
@@ -46,22 +46,22 @@ rename_mapping = {
     'min_age_limit': 'Minimum Age Limit',
     'available_capacity_dose1': 'Available Capacity',
     'vaccine': 'Vaccine',
-    'Total doses til date': 'People(45+) vaccinated till date',
+    'Total doses til date': 'People (45+) vaccinated till date',
     'center': 'No of not fully utilized centers',
     'state' : 'State',
     'district' : 'District',
-    'slots': 'Unutilized Doses(45+)',
-    'slots 18-44': 'Unutilized Doses(18-44)',
-    'today' : 'Doses Administered(45+)',
-    'avgdaily': 'Last 7 days Daily Avg Vaccination(45+)',
-    'today 18' : 'Doses Administered(18-44)',
-    'Total doses til date 18': 'People(18-44) vaccinated till date',
-    'avgdaily 18-44': 'Last 7 days Daily Avg Vaccination(18-44)',
+    'slots': 'Unutilized Doses (45+)',
+    'slots 18-44': 'Unutilized Doses (18-44)',
+    'today' : 'Doses Administered (45+)',
+    'avgdaily': 'Last 7 days Daily Avg Vaccination (45+)',
+    'today 18' : 'Doses Administered (18-44)',
+    'Total doses til date 18': 'People (18-44) vaccinated till date',
+    'avgdaily 18-44': 'Last 7 days Daily Avg Vaccination (18-44)',
     'gratio':'Female vaccinated per 1000 male'
     }
 
-st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : 2 June')
-st.write('Tracking daily (non) Utilization, Coverage, Speed, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 2 June 2021 , 9:05-9:50PM from CoWIN. ')
+st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 3 June 2021 , 8:05-8:50PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -173,7 +173,7 @@ def dashh(val):
     
     fig1.update_layout(#text=dfg[val], 
         title=dict(
-            text=val+" for India on 2 June: "+str(uind[val]),
+            text=val+" for India on "+td+": "+str(uind[val]),
             xanchor='center',
             x=0.5,
             yref='paper',
@@ -186,7 +186,7 @@ def dashh(val):
         y=0.05,
         xref='paper',
         yref='paper',
-        text='Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, 2 June',
+        text='Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, '+td,
         showarrow = False
     )],
         margin={'r': 0, 't': 30, 'l': 0, 'b': 0},
@@ -225,7 +225,7 @@ fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='N
                                  'Between 5000-10000':'RGB(0,255,0)',
                                  'More than 10000':'RGB(0,102,0)'})
 fig.update_traces(hoverinfo='label+percent', textinfo='value')
-fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, 2 June',
+fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, '+td,
                               font_size = 10,
                               showarrow = False,
                               xref = 'paper', x = 0.5,
@@ -275,7 +275,7 @@ fig18 = px.pie(ad18,values='No of Districts', names='Last 7 days daily avg',titl
                                  'Between 5000-10000':'RGB(0,255,0)',
                                  'More than 10000':'RGB(0,102,0)'})
 fig18.update_traces(hoverinfo='label+percent', textinfo='value')
-fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, 2 June',
+fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, '+td,
                               font_size = 10,
                               showarrow = False,
                               xref = 'paper', x = 0.5,
@@ -290,7 +290,7 @@ figg = px.pie(adg,values='No of Districts', names='Female vaccinated per 1000 ma
                                  'Between 9500-1000':'RGB(0,255,0)',
                                  'More than 1000':'RGB(0,102,0)'})
 figg.update_traces(hoverinfo='label+percent', textinfo='value')
-figg.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, 2 June',
+figg.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, '+td,
                               font_size = 10,
                               showarrow = False,
                               xref = 'paper', x = 0.5,
@@ -323,14 +323,14 @@ with left_column_1:
 
 
 
-st.write(str(sum(df['slots']))+' doses(45 group) and '+str(sum(df['slots 18-44']))+' doses(18-44 group) went unutilized on 2 June. ')#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
+st.write(str(sum(df['slots']))+' doses(45 group) and '+str(sum(df['slots 18-44']))+' doses(18-44 group) went unutilized on '+td)#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
 df.rename(columns=rename_mapping, inplace=True)
 with center_column_1:
-    sort_inp = st.selectbox('Sort by', ['Unutilized Doses(45+)','Doses Administered(45+)','Last 7 days Daily Avg Vaccination(45+)','People(45+) vaccinated till date','Unutilized Doses(18-44)','Doses Administered(18-44)','Last 7 days Daily Avg Vaccination(18-44)','People(18-44) vaccinated till date','Female vaccinated per 1000 male'] )
+    sort_inp = st.selectbox('Sort by', ['Unutilized Doses (45+)','Doses Administered (45+)','Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male'] )
     if sort_inp != "":
         df= df.sort_values(by=sort_inp, ascending=False)
     
-table = deepcopy(df[['District','Unutilized Doses(45+)','Doses Administered(45+)','Last 7 days Daily Avg Vaccination(45+)','People(45+) vaccinated till date','Unutilized Doses(18-44)','Doses Administered(18-44)','Last 7 days Daily Avg Vaccination(18-44)','People(18-44) vaccinated till date','Female vaccinated per 1000 male']])
+table = deepcopy(df[['District','Unutilized Doses (45+)','Doses Administered (45+)','Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male']])
 table.reset_index(inplace=True, drop=True)
 
 st.table(table)
