@@ -138,6 +138,7 @@ def dashh(val):
         
         marker_line_color='peachpuff',
         showscale=True,
+        #below=True,
         #if val=='Today Dose wastage %':
         #reversescale=cs,
         colorbar=dict(
@@ -156,6 +157,7 @@ def dashh(val):
             y=0.05
         )
     ))
+    #fig1.update_traces(name=dfg[val], selector=dict(type='choropleth'))
 
     fig1.update_geos(
         visible=False,
@@ -197,7 +199,7 @@ left_column_2, right_column_2 = st.beta_columns(2)
 with left_column_2:
     val = st.selectbox('Select parameter', ['Doses(45+) utilization %','% of 45+ people vaccinated','Last 7 days avg per 100 people(45+)','Doses(18-44) utilization %','% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)','Female vaccinated per 1000 male'])
     fig1=dashh(val)
-st.plotly_chart(fig1)
+st.plotly_chart(fig1, use_container_width=True)
 ad=[]
 ad.append({'Last 7 days daily avg':'Less than 200',
      'No of Districts':df[df['avgdaily']<200].count()[1]})
@@ -227,7 +229,8 @@ fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herok
                               showarrow = False,
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
-st.plotly_chart(fig)
+figg.update_layout(title_x=0.5)
+st.plotly_chart(fig, use_container_width=True)
 ad18=[]
 ad18.append({'Last 7 days daily avg':'Less than 200',
      'No of Districts':df[df['avgdaily 18-44']<200].count()[1]})
@@ -276,7 +279,8 @@ fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.her
                               showarrow = False,
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
-st.plotly_chart(fig18)
+figg.update_layout(title_x=0.5)
+st.plotly_chart(fig18, use_container_width=True)
 figg = px.pie(adg,values='No of Districts', names='Female vaccinated per 1000 male',title='No of Districts: Female vaccinated per 1000 male',color='Female vaccinated per 1000 male', color_discrete_map={'Less than 600':'RGB(153,0,0)',
                                  'Between 600-700':'RGB(255,51,51)',
                                  'Between 700-800':'RGB(255,153,153)',
@@ -290,7 +294,8 @@ figg.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.hero
                               showarrow = False,
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
-st.plotly_chart(figg)
+figg.update_layout(title_x=0.5)
+st.plotly_chart(figg, use_container_width=True)
 #left_column_3, right_column_3 = st.beta_columns(2)
 #with left_column_3:
     #val = st.selectbox('Select parameter', ['% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)'])
