@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='6 June'
+td='7 June'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("66.csv",index_col = False)
+    df = pd.read_csv("67.csv",index_col = False)
     return df
 
 
@@ -61,7 +61,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
-st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 6 June 2021 , 8:15-8:50PM from CoWIN. ')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 7 June 2021 , 9:05-9:50PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -277,6 +277,7 @@ adg.append({'Female vaccinated per 1000 male':'Between 950-1000',
 adg.append({'Female vaccinated per 1000 male':'More than 1000',
      'No of Districts':df[df['gratio']>=1000 ].count()[1]})
 adg=pd.DataFrame(adg)
+
 #fig = px.bar(ad, x='Last 7 days daily avg', y='No of Districts')
 #fig.update_traces(textposition='outside')
 
@@ -336,7 +337,7 @@ with left_column_1:
 
 
 
-st.write(str(sum(df['slots']))+' doses(45 group) and '+str(sum(df['slots 18-44']))+' doses(18-44 group) went unutilized on '+td)#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
+st.write(str(sum(df['slots']))+' doses(45 group) and '+str(sum(df['slots 18-44']))+'('+str(sum(df['paid slot']))+' paid slots) doses(18-44 group) went unutilized on '+td)#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
 df.rename(columns=rename_mapping, inplace=True)
 with center_column_1:
     sort_inp = st.selectbox('Sort by', ['Unutilized Doses (45+)','Doses Administered (45+)','Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male'] )
