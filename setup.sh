@@ -6,6 +6,7 @@ port = $PORT\n\
 enableCORS = false\n\
 \n\
 " > ~/.streamlit/config.toml
-
-#file=~/.streamlit/static/index.html
-#sed -i 's/<title>Streamlit</<title>Covid Tika Tracker</g' $file
+Old="<title>Streamlit</title>"
+New="<title>Covid Tika Tracker</title>"
+file=~/.streamlit/static/index.html
+sed -i "s|$Old|$New|g" $file
