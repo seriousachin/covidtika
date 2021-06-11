@@ -66,9 +66,9 @@ st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, Distric
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
 name_stat=np.unique(mappingdf["state"].values)
-pp=[105669,15897000,372210,8113000,24447000,293781,6955000,141600,80500,5183000,401941,18165000,7177000,2264000,3279000,8395000,18903000,12782000,73245,18467,18965000,35159000,731563,796807,293638,533386,12778000,358310,8924000,17351000,163478,24993000,10372000,987290,47793000,2848000,28410000]
-pp1=[181514,23656083,733996,15487657,48850895,503113,12712404,159433,
-128953,7684565,687704,30700637,13392472,3259129,6122579,16526904,29901024,13879550,125328
+#141600,80500 ,159433,128953
+pp=[105669,15897000,372210,8113000,24447000,293781,6955000,222100,5183000,401941,18165000,7177000,2264000,3279000,8395000,18903000,12782000,73245,18467,18965000,35159000,731563,796807,293638,533386,12778000,358310,8924000,17351000,163478,24993000,10372000,987290,47793000,2848000,28410000]
+pp1=[181514,23656083,733996,15487657,48850895,503113,12712404,288386,7684565,687704,30700637,13392472,3259129,6122579,16526904,29901024,13879550,125328
 ,31506,36034217,56232043,1450455,1583181,579270,1054334,18597693,613176,13816067,34233274,323095,32664620,17373309,1949580,99009789,5206552,44278721]
 sr=[876,993,938,958,918,818,991,774,618,868,973,919,879,972,889,948,973,1084,919,946,931,929,985,989,976,931,979,1037,895,928,890,996,985,960,912,963,950]
 uind={'Doses(45+) utilization %':round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2),
@@ -86,7 +86,7 @@ uind={'Doses(45+) utilization %':round(sum(df['today'])*100.00/ (sum(df['today']
      'Last 7 days avg per 100 people(18+)':round(100*(sum(df['avgdaily 18-44'])+sum(df['avgdaily']))/(sum(pp1)+sum(pp)),2),
      'Days to get 70% coverage(18+) at current speed':int(max((0.7*(sum(pp)+sum(pp1))-sum(df['Total doses til date'])-sum(df['Total doses til date 18']))/(sum(df['avgdaily'])+sum(df['avgdaily 18-44'])),0)),
      '% of total people(18+) fully vaccinated':round(100*sum(df['fully'])/(sum(pp1)+sum(pp)),2)}
-for i in range(0,37):
+for i in range(0,36):
     dfs=df.loc[df['state'] == name_stat[i]]
     if sum(dfs['slots'])+sum(dfs['today'])==0 and sum(dfs['slots 18-44'])+sum(dfs['today 18'])==0:
         ff.append({'state':name_stat[i],'Doses(45+) utilization %':100,'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),
@@ -158,6 +158,7 @@ dfg['gen'] = dfg['state'] + '<br>' +\
 'Female vaccinated per 1000 male : ' + dfg['Female vaccinated per 1000 male']+ '<br>' +\
 'Vaccination Gender Parity Index: '+dfg['Vaccination Gender Parity Index']+ '<br>' +\
 '% of total people(18+) fully vaccinated: '+dfg['% of total people(18+) fully vaccinated']
+#name_stat
 
 
 def dashh(val):
@@ -169,6 +170,7 @@ def dashh(val):
         cs=True
     else:
         cs=False
+    zz=dfg[val]    
     fig1 = go.Figure(data=go.Choropleth(
         geojson="https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson",
         featureidkey='properties.ST_NM',
@@ -229,13 +231,22 @@ def dashh(val):
             pad={'b': 10}
         ),
          annotations = [dict(
-        x=0.55,
-        y=0.05,
+        x=0.90,
+        y=0.35,
         xref='paper',
         yref='paper',
-        text='Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, '+td,
+        text='Sachin Pandey @serioussachin,'+ '<br>' +\
+             'https://covidtika.herokuapp.com '+ '<br>' +\
+             'CoWIN, '+td,
         showarrow = False
-    )],
+    ), dict(
+        x=0.2,
+        y=0.06,
+        xref='paper',
+        yref='paper',
+        text='Lakshadweep: '+zz[18],
+        showarrow = False
+    )], 
         margin={'r': 0, 't': 30, 'l': 0, 'b': 0},
         height=750,
         width=750,
@@ -278,6 +289,8 @@ fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herok
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
 fig.update_layout(title_x=0.5)
+#col1,col2 = st.beta_columns(2)
+#with col1:
 st.plotly_chart(fig)
 ad18=[]
 ad18.append({'Last 7 days daily avg':'Less than 200',
@@ -329,6 +342,7 @@ fig18.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.her
                               xref = 'paper', x = 0.5,
                               yref = 'paper', y = -0.05)
 fig18.update_layout(title_x=0.5)
+#with col2:
 st.plotly_chart(fig18)
 figg = px.pie(adg,values='No of Districts', names='Female vaccinated per 1000 male',title='No of Districts: Female vaccinated per 1000 male',color='Female vaccinated per 1000 male', color_discrete_map={'Less than 600':'RGB(153,0,0)',
                                  'Between 600-700':'RGB(255,51,51)',

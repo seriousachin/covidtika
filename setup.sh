@@ -9,4 +9,4 @@ enableCORS = false\n\
 #Old="<title>Streamlit</title>"
 #New="<title>Covid Tika Tracker</title>"
 #file=~/.streamlit/static/index.html
-#sed -i "s|$Old|$New|g" $file
+sed -i "s/Streamlit/CovidTikaTracker/g" ~/.streamlit/static/index.html
