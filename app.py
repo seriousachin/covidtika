@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='10 June'
+td='11 June'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("610.csv",index_col = False)
+    df = pd.read_csv("611.csv",index_col = False)
     return df
 
 
@@ -61,7 +61,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
-st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 10 June 2021 , 8:05-8:40PM from CoWIN. ')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 11 June 2021 , 8:30-9:10PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -70,7 +70,7 @@ name_stat=np.unique(mappingdf["state"].values)
 pp=[105669,15897000,372210,8113000,24447000,293781,6955000,222100,5183000,401941,18165000,7177000,2264000,3279000,8395000,18903000,12782000,73245,18467,18965000,35159000,731563,796807,293638,533386,12778000,358310,8924000,17351000,163478,24993000,10372000,987290,47793000,2848000,28410000]
 pp1=[181514,23656083,733996,15487657,48850895,503113,12712404,288386,7684565,687704,30700637,13392472,3259129,6122579,16526904,29901024,13879550,125328
 ,31506,36034217,56232043,1450455,1583181,579270,1054334,18597693,613176,13816067,34233274,323095,32664620,17373309,1949580,99009789,5206552,44278721]
-sr=[876,993,938,958,918,818,991,774,618,868,973,919,879,972,889,948,973,1084,919,946,931,929,985,989,976,931,979,1037,895,928,890,996,985,960,912,963,950]
+sr=[876,993,938,958,918,818,991,774,868,973,919,879,972,889,948,973,1084,919,946,931,929,985,989,976,931,979,1037,895,928,890,996,985,960,912,963,950]
 uind={'Doses(45+) utilization %':round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2),
      '% of 45+ people vaccinated':round(100*sum(df['Total doses til date'])/sum(pp),2),
      'Last 7 days avg per 100 people(45+)':round(100*sum(df['avgdaily'])/sum(pp),2),
