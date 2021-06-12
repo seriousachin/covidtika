@@ -70,7 +70,8 @@ name_stat=np.unique(mappingdf["state"].values)
 pp=[105669,15897000,372210,8113000,24447000,293781,6955000,222100,5183000,401941,18165000,7177000,2264000,3279000,8395000,18903000,12782000,73245,18467,18965000,35159000,731563,796807,293638,533386,12778000,358310,8924000,17351000,163478,24993000,10372000,987290,47793000,2848000,28410000]
 pp1=[181514,23656083,733996,15487657,48850895,503113,12712404,288386,7684565,687704,30700637,13392472,3259129,6122579,16526904,29901024,13879550,125328
 ,31506,36034217,56232043,1450455,1583181,579270,1054334,18597693,613176,13816067,34233274,323095,32664620,17373309,1949580,99009789,5206552,44278721]
-sr=[876,993,938,958,918,818,991,774,868,973,919,879,972,889,948,973,1084,919,946,931,929,985,989,976,931,979,1037,895,928,890,996,985,960,912,963,950]
+srr=[876,993,938,958,918,818,991,774,868,973,919,879,972,889,948,973,1084,919,946,931,929,985,989,976,931,979,1037,895,928,890,996,985,960,912,963,950]
+sr=[868,997,913,953,912,812,995,752,866,973,923,885,983,887,948,971,1099,919,951,933,931,995,989,976,929,985,1047,899,935,883,1000,986,962,910,975,946]
 uind={'Doses(45+) utilization %':round(sum(df['today'])*100.00/ (sum(df['today'])+sum(df['slots'])),2),
      '% of 45+ people vaccinated':round(100*sum(df['Total doses til date'])/sum(pp),2),
      'Last 7 days avg per 100 people(45+)':round(100*sum(df['avgdaily'])/sum(pp),2),
@@ -80,7 +81,7 @@ uind={'Doses(45+) utilization %':round(sum(df['today'])*100.00/ (sum(df['today']
      'Last 7 days avg per 100 people(18-44)':round(100*sum(df['avgdaily 18-44'])/sum(pp1),2),
      'Today Dose wastage %':round(100*sum(df['wastage'])/(sum(df['today 18'])+sum(df['today'])),2),
      'Female vaccinated per 1000 male':int(round(sum(df['female'])*1000/sum(df['male']),0)),
-     'Vaccination Gender Parity Index':round(sum(df['female'])*1000/(sum(df['male'])*940),3),
+     'Vaccination Gender Parity Index':round(sum(df['female'])*1000/(sum(df['male'])*944),3),
      'Vaccination District Variation Index':round((min(df['avgdaily 18-44'])+min(df['avgdaily']))/(max(df['avgdaily'])+max(df['avgdaily 18-44'])),4),
      '% of total people(18+) vaccinated':round(100*(sum(df['Total doses til date 18'])+sum(df['Total doses til date']))/(sum(pp1)+sum(pp)),2),
      'Last 7 days avg per 100 people(18+)':round(100*(sum(df['avgdaily 18-44'])+sum(df['avgdaily']))/(sum(pp1)+sum(pp)),2),
@@ -397,7 +398,7 @@ table = deepcopy(df[['District','Unutilized Doses (45+)','Doses Administered (45
 table.reset_index(inplace=True, drop=True)
 
 st.table(table)
-st.info('Methodology:calculating unutilized doses from available slots in all districts for the same day from appointment api after 5pm or time duration mentioned and vaccinated people on that day in all districts from report api of CoWIN portal. So it is prone to error due to api cache & cowin usability by districts and states! Vaccination Gender parity Index= (Female Vaccinated per 1000 Male)/(Female population per 1000 male census 2011)')
+st.info('Methodology:calculating unutilized doses from available slots in all districts for the same day from appointment api after 5pm or time duration mentioned and vaccinated people on that day in all districts from report api of CoWIN portal. So it is prone to error due to api cache & cowin usability by districts and states! Vaccination Gender parity Index= (Female Vaccinated per 1000 Male)/(Female population per 1000 male among 18+ as on 2021 projected from census 2011)')
     
 
 pageviews=Pageviews()
