@@ -277,7 +277,7 @@ ad.append({'Last 7 days daily avg':'More than 10000',
      'No of Districts':df[df['avgdaily']>=10000 ].count()[1]})
 ad=pd.DataFrame(ad)
 xxx=df[df['Total doses til date 18']>df['Total doses til date']].count()[1]
-xxx
+#xxx
 fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='No of Districts: Last 7 days daily avg vaccinated people(45+ group)',color='Last 7 days daily avg', color_discrete_map={'Less than 200':'RGB(153,0,0)',
                                  'Between 200-500':'RGB(255,51,51)',
                                  'Between 500-1000':'RGB(255,153,153)',
