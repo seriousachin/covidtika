@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='15 June'
+td='16 June'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("615.csv",index_col = False)
+    df = pd.read_csv("616.csv",index_col = False)
     return df
 
 
@@ -61,7 +61,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
-st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 15 June 2021 , 9:05-9:25PM from CoWIN. ')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 16 June 2021 , 9:05-9:25PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -398,7 +398,8 @@ with center_column_1:
 table = deepcopy(df[['District','Unutilized Doses (45+)','Doses Administered (45+)','Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male']])
 
 table.reset_index(inplace=True, drop=True)
-
+xxx=df.describe()
+#xxx
 st.table(table)
 st.info('Methodology:calculating unutilized doses from available slots in all districts for the same day from appointment api after 5pm or time duration mentioned and vaccinated people on that day in all districts from report api of CoWIN portal. So it is prone to error due to api cache & cowin usability by districts and states! Vaccination Gender parity Index= (Female Vaccinated per 1000 Male)/(Female population per 1000 male among 18+ as on 2021 projected from census 2011)')
     
