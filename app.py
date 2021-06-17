@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='16 June'
+td='17 June'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("616.csv",index_col = False)
+    df = pd.read_csv("617.csv",index_col = False)
     return df
 
 
@@ -61,7 +61,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
-st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 16 June 2021 , 9:05-9:25PM from CoWIN. ')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 17 June 2021 , 9:40-9:50PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -86,7 +86,9 @@ uind={'Doses(45+) utilization %':round(sum(df['today'])*100.00/ (sum(df['today']
      '% of total people(18+) vaccinated':round(100*(sum(df['Total doses til date 18'])+sum(df['Total doses til date']))/(sum(pp1)+sum(pp)),2),
      'Last 7 days avg per 100 people(18+)':round(100*(sum(df['avgdaily 18-44'])+sum(df['avgdaily']))/(sum(pp1)+sum(pp)),2),
      'Days to get 70% coverage(18+) at current speed':int(max((0.7*(sum(pp)+sum(pp1))-sum(df['Total doses til date'])-sum(df['Total doses til date 18']))/(sum(df['avgdaily'])+sum(df['avgdaily 18-44'])),0)),
-     '% of total people(18+) fully vaccinated':round(100*sum(df['fully'])/(sum(pp1)+sum(pp)),2)}
+     '% of total people(18+) fully vaccinated':round(100*sum(df['fully'])/(sum(pp1)+sum(pp)),2)
+     #'Vaccine Takers Parity Index(45+ vs 18-44 last 7days)':round((100*sum(df['avgdaily'])/sum(pp))/(100*sum(df['avgdaily 18-44'])/sum(pp1)),2)
+     }
 for i in range(0,36):
     dfs=df.loc[df['state'] == name_stat[i]]
     if sum(dfs['slots'])+sum(dfs['today'])==0 and sum(dfs['slots 18-44'])+sum(dfs['today 18'])==0:
@@ -134,6 +136,8 @@ for i in range(0,36):
 dfg = pd.DataFrame(ff)
 #tdg = deepcopy(dfg[['state','Vaccination District Variation Index']])
 #tdg.reset_index(inplace=True, drop=True)
+#dfg['Vaccine Takers Parity Index(45+ vs 18-44 last 7days)']=round(dfg['Last 7 days avg per 100 people(45+)']/dfg['Last 7 days avg per 100 people(18-44)'],2)
+#dfg['Vaccine Takers Parity Index(45+ vs 18-44 last 7days)'] = np.where(dfg['Last 7 days avg per 100 people(18-44)'] < 1, dfg['Last 7 days avg per 100 people(18-44)']/dfg['Last 7 days avg per 100 people(18-44)'], dfg['Last 7 days avg per 100 people(18-44)']/dfg['Last 7 days avg per 100 people(18-44)'])
 
 for col in dfg.columns:
     dfg[col] = dfg[col].astype(str)
