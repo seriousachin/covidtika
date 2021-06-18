@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='17 June'
+td='18 June'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("617.csv",index_col = False)
+    df = pd.read_csv("618.csv",index_col = False)
     return df
 
 
@@ -61,7 +61,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
-st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 17 June 2021 , 9:40-9:50PM from CoWIN. ')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 18 June 2021 , 10:40-11:10PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -136,9 +136,11 @@ for i in range(0,36):
 dfg = pd.DataFrame(ff)
 #tdg = deepcopy(dfg[['state','Vaccination District Variation Index']])
 #tdg.reset_index(inplace=True, drop=True)
-#dfg['Vaccine Takers Parity Index(45+ vs 18-44 last 7days)']=round(dfg['Last 7 days avg per 100 people(45+)']/dfg['Last 7 days avg per 100 people(18-44)'],2)
+dfg['Vaccination Index']=round(0.5*dfg['% of 45+ people vaccinated']+0.2*dfg['% of 18-44 people vaccinated']+11*dfg['Last 7 days avg per 100 people(45+)']+4*dfg['Last 7 days avg per 100 people(18-44)']+5*dfg['Vaccination Gender Parity Index']+0.25*dfg['% of total people(18+) fully vaccinated'],2)
+uind['Vaccination Index']=round(0.50*uind['% of 45+ people vaccinated']+0.2*uind['% of 18-44 people vaccinated']+11*uind['Last 7 days avg per 100 people(45+)']+4*uind['Last 7 days avg per 100 people(18-44)']+5*uind['Vaccination Gender Parity Index']+0.25*uind['% of total people(18+) fully vaccinated'],2)
 #dfg['Vaccine Takers Parity Index(45+ vs 18-44 last 7days)'] = np.where(dfg['Last 7 days avg per 100 people(18-44)'] < 1, dfg['Last 7 days avg per 100 people(18-44)']/dfg['Last 7 days avg per 100 people(18-44)'], dfg['Last 7 days avg per 100 people(18-44)']/dfg['Last 7 days avg per 100 people(18-44)'])
-
+#indd
+#dfg[['state','Vaccine Index']]
 for col in dfg.columns:
     dfg[col] = dfg[col].astype(str)
 
@@ -162,19 +164,27 @@ dfg['gen'] = dfg['state'] + '<br>' +\
 'Total People(18+) vaccinated till date :'+dfg['Total People(18+) vaccinated till date']+ '<br>' +\
 'Female vaccinated per 1000 male : ' + dfg['Female vaccinated per 1000 male']+ '<br>' +\
 'Vaccination Gender Parity Index: '+dfg['Vaccination Gender Parity Index']+ '<br>' +\
-'% of total people(18+) fully vaccinated: '+dfg['% of total people(18+) fully vaccinated']
+'% of total people(18+) fully vaccinated: '+dfg['% of total people(18+) fully vaccinated']+ '<br>' +\
+'Vaccination Index: '+dfg['Vaccination Index']
 #name_stat
 
 
 def dashh(val):
     if (val=='% of 18-44 people vaccinated' or val=='Last 7 days avg per 100 people(18-44)' or val=='Doses(18-44) utilization %' ):
         dfg['text']=dfg['text18']
-    if (val=='Female vaccinated per 1000 male' or val=='Vaccination Gender Parity Index' or val=='% of total people(18+) vaccinated' or val=='Last 7 days avg per 100 people(18+)' or val=='Days to get 70% coverage(18+) at current speed' or val=='% of total people(18+) fully vaccinated'):
+    if (val=='Female vaccinated per 1000 male' or val=='Vaccination Gender Parity Index' or val=='% of total people(18+) vaccinated' or val=='Last 7 days avg per 100 people(18+)' or val=='Days to get 70% coverage(18+) at current speed' or val=='% of total people(18+) fully vaccinated' or val=='Vaccination Index'):
         dfg['text']=dfg['gen']
     if val=='Days to get 80% coverage(45+) at current speed' or val=='Days to get 70% coverage(18+) at current speed':
         cs=True
     else:
         cs=False
+    if val=='Vaccination Index':
+        vi='Vaccination Index is calculated'+  '<br>' +\
+        'on coverage & speed  in'+  '<br>' +\
+        '45+(50%) & 18-44(20%) group, '+  '<br>' +\
+        'Gender Parity(5%) & Fully Vaccinated(25%) '
+    else:
+        vi=''
     zz=dfg[val]    
     fig1 = go.Figure(data=go.Choropleth(
         geojson="https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson",
@@ -236,13 +246,16 @@ def dashh(val):
             pad={'b': 10}
         ),
          annotations = [dict(
-        x=0.90,
-        y=0.35,
+        x=0.85,
+        y=0.15,
         xref='paper',
         yref='paper',
         text='Sachin Pandey @serioussachin,'+ '<br>' +\
              'https://covidtika.herokuapp.com '+ '<br>' +\
-             'CoWIN, '+td,
+             'CoWIN, '+td+ '<br>' +\
+             ''+ '<br>' +\
+             ''+ '<br>' +\
+             ''+vi,
         showarrow = False
     ), dict(
         x=0.2,
@@ -261,7 +274,7 @@ def dashh(val):
 fig1=dashh('Doses(45+) utilization %')
 left_column_2, right_column_2 = st.beta_columns(2)
 with left_column_2:
-    val = st.selectbox('Select parameter', ['Doses(45+) utilization %','% of 45+ people vaccinated','Last 7 days avg per 100 people(45+)','Days to get 80% coverage(45+) at current speed','Doses(18-44) utilization %','% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)','Vaccination Gender Parity Index','Female vaccinated per 1000 male','% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 70% coverage(18+) at current speed','% of total people(18+) fully vaccinated'])
+    val = st.selectbox('Select parameter', ['Doses(45+) utilization %','% of 45+ people vaccinated','Last 7 days avg per 100 people(45+)','Days to get 80% coverage(45+) at current speed','Doses(18-44) utilization %','% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)','Vaccination Gender Parity Index','Female vaccinated per 1000 male','% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 70% coverage(18+) at current speed','% of total people(18+) fully vaccinated','Vaccination Index'])
     fig1=dashh(val)
 st.plotly_chart(fig1)
 ad=[]
