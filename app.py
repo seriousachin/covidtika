@@ -198,6 +198,10 @@ def dashh(val):
         'unvaccinated population vaccinated today'
     else:
         vi=''
+    if val!='% of total people(18+) fully vaccinated':
+        claim='*Data based on atleast single dose vaccinated people.'
+    else:
+        claim=''
     zz=dfg[val]    
     fig1 = go.Figure(data=go.Choropleth(
         geojson="https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson",
@@ -276,6 +280,14 @@ def dashh(val):
         xref='paper',
         yref='paper',
         text='Lakshadweep: '+zz[18],
+        showarrow = False
+    )
+        , dict(
+        x=0.85,
+        y=0.93,
+        xref='paper',
+        yref='paper',
+        text=claim,
         showarrow = False
     )], 
         margin={'r': 0, 't': 30, 'l': 0, 'b': 0},
