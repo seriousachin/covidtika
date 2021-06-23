@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='22 June'
+td='23 June'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("622.csv",index_col = False)
+    df = pd.read_csv("623.csv",index_col = False)
     return df
 
 
@@ -61,7 +61,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
-st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 22 June 2021 , 10:12-10:25PM from CoWIN. ')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 23 June 2021 , 10:20-10:40PM from CoWIN. ')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
 ff=[]
@@ -148,7 +148,11 @@ dfg['Vaccination Index']=round(0.5*dfg['% of 45+ people vaccinated']+0.2*dfg['% 
 uind['Vaccination Index']=round(0.50*uind['% of 45+ people vaccinated']+0.2*uind['% of 18-44 people vaccinated']+11*uind['Last 7 days avg per 100 people(45+)']+4*uind['Last 7 days avg per 100 people(18-44)']+5*uind['Vaccination Gender Parity Index']+0.25*uind['% of total people(18+) fully vaccinated'],2)
 #dfg['Vaccine Takers Parity Index(45+ vs 18-44 last 7days)'] = np.where(dfg['Last 7 days avg per 100 people(18-44)'] < 1, dfg['Last 7 days avg per 100 people(18-44)']/dfg['Last 7 days avg per 100 people(18-44)'], dfg['Last 7 days avg per 100 people(18-44)']/dfg['Last 7 days avg per 100 people(18-44)'])
 #indd
-#dfg[['state','Vaccine Index']]
+dfg['Add Doses']=(dfg['People vaccinated till date']*70/dfg['% of 45+ people vaccinated'])-dfg['People vaccinated till date']
+ssss=dfg[['state','Add Doses']]
+ssss=ssss.loc[ssss['Add Doses']>0]
+
+
 for col in dfg.columns:
     dfg[col] = dfg[col].astype(str)
 
