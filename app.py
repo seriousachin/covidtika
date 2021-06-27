@@ -319,30 +319,30 @@ with left_column_2:
     fig1=dashh(val)
 st.plotly_chart(fig1)
 ad=[]
-ad.append({'Last 7 days daily avg':'Less than 200',
-     'No of Districts':df[df['avg people']<200].count()[1]})
-ad.append({'Last 7 days daily avg':'Between 200-500',
-     'No of Districts':df[df['avg people']<500].count()[1]-df[df['avg people']<=200].count()[1]})
+ad.append({'Last 7 days daily avg':'Less than 500',
+     'No of Districts':df[df['avg people']<500].count()[1]})
 ad.append({'Last 7 days daily avg':'Between 500-1000',
      'No of Districts':df[df['avg people']<1000 ].count()[1]-df[df['avg people']<=500].count()[1]})
 ad.append({'Last 7 days daily avg':'Between 1000-2000',
-     'No of Districts':df[df['avg people']<2000 ].count()[1]-df[df['avg people']<=1000].count()[1]})
+     'No of Districts':df[df['avg people']<2000].count()[1]-df[df['avg people']<=1000].count()[1]})
 ad.append({'Last 7 days daily avg':'Between 2000-5000',
-     'No of Districts':df[df['avgdaily']<5000 ].count()[1]-df[df['avg people']<=2000].count()[1]})
+     'No of Districts':df[df['avg people']<5000 ].count()[1]-df[df['avg people']<=2000].count()[1]})
 ad.append({'Last 7 days daily avg':'Between 5000-10000',
      'No of Districts':df[df['avg people']<10000 ].count()[1]-df[df['avg people']<=5000].count()[1]})
-ad.append({'Last 7 days daily avg':'More than 10000',
-     'No of Districts':df[df['avg people']>=10000 ].count()[1]})
+ad.append({'Last 7 days daily avg':'Between 10000-20000',
+     'No of Districts':df[df['avgdaily']<20000 ].count()[1]-df[df['avg people']<=10000].count()[1]})
+ad.append({'Last 7 days daily avg':'More than 20000',
+     'No of Districts':df[df['avg people']>=20000 ].count()[1]})
 ad=pd.DataFrame(ad)
 xxx=df[df['Total doses til date 18']>df['Total doses til date']].count()[1]
 #xxx
-fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='No of Districts: Last 7 days daily avg vaccinated people(18+)',color='Last 7 days daily avg', color_discrete_map={'Less than 200':'RGB(153,0,0)',
-                                 'Between 200-500':'RGB(255,51,51)',
-                                 'Between 500-1000':'RGB(255,153,153)',
-                                 'Between 1000-2000':'RGB(255,204,204)',
-                                 'Between 2000-5000':'RGB(229,255,204)',
-                                 'Between 5000-10000':'RGB(0,255,0)',
-                                 'More than 10000':'RGB(0,102,0)'})
+fig = px.pie(ad,values='No of Districts', names='Last 7 days daily avg',title='No of Districts: Last 7 days daily avg vaccinated people(18+)',color='Last 7 days daily avg', color_discrete_map={'Less than 500':'RGB(153,0,0)',
+                                 'Between 500-1000':'RGB(255,51,51)',
+                                 'Between 1000-2000':'RGB(255,153,153)',
+                                 'Between 2000-5000':'RGB(255,204,204)',
+                                 'Between 5000-10000':'RGB(229,255,204)',
+                                 'Between 10000-20000':'RGB(0,255,0)',
+                                 'More than 20000':'RGB(0,102,0)'})
 fig.update_traces(hoverinfo='label+percent', textinfo='value')
 fig.add_annotation(text = 'Sachin Pandey @serioussachin, https://covidtika.herokuapp.com & CoWIN, '+td,
                               font_size = 10,
