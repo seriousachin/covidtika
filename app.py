@@ -218,7 +218,7 @@ def dashh(val):
         'unvaccinated population vaccinated today'
     else:
         vi=''
-    if val!='% of total people(18+) fully vaccinated' or val!='Todays avg doses per center':
+    if val!='% of total people(18+) fully vaccinated' and val!='Todays avg doses per center':
         claim='*Data based on atleast single dose vaccinated people.'
     else:
         claim=''
