@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='29 June'
+td='1 July'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("629.csv",index_col = False)
+    df = pd.read_csv("701.csv",index_col = False)
     return df
 
 
@@ -57,13 +57,13 @@ rename_mapping = {
     'today 18' : 'Doses Administered (18-44)',
     'Total doses til date 18': 'People (18-44) vaccinated till date',
     'avgdaily 18-44': 'Last 7 days Daily Avg Vaccination (18-44)',
-    'gratio':'Female vaccinated per 1000 male',
+    'gratio':'Doses given to Female  per 1000 male',
     'avg people':'Last 7 days Daily Avg Vaccination (18+)',
     'people':'People (18+) vaccinated till date'
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
-st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 29 June 2021 , 10:15-10:25PM from CoWIN. ')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses for 45+ and 18-44 group. Status as on 1 July 2021 , 9:15-9:45PM from CoWIN. ')
 st.info('25 June Update: By mistake or knowingly, CoWin Dashboard has stopped giving data on Number of Female/male and Number of 18-44/45+ people being vaccinated, rather they are giving number of doses provided to them. So we are unable to show age, gender specific analysis. We are very sorry for that.')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
@@ -190,10 +190,12 @@ dfg['gen'] = dfg['state'] + '<br>' +\
 'Last 7 days avg per 100 people(18+) :'+dfg['Last 7 days avg per 100 people(18+)']+ '<br>' +\
 'Total People(18+) vaccinated till date :'+dfg['Total People(18+) vaccinated till date']+ '<br>' +\
 '% of total people(18+) fully vaccinated: '+dfg['% of total people(18+) fully vaccinated']+ '<br>' +\
+'Doses given to Female  per 1000 male : ' + dfg['Female vaccinated per 1000 male']+ '<br>' +\
+'Vaccination Gender Parity Index: '+dfg['Vaccination Gender Parity Index']+ '<br>' +\
 'Adult population per Active Vaccination Center:'+dfg['Adult population per Active Vaccination Center']+ '<br>' +\
 'Todays avg doses per center: '+dfg['Todays avg doses per center']
-#'Female vaccinated per 1000 male : ' + dfg['Female vaccinated per 1000 male']+ '<br>' +\
-#'Vaccination Gender Parity Index: '+dfg['Vaccination Gender Parity Index']+ '<br>' +\
+#'Doses given to Female  per 1000 male : ' + dfg['Female vaccinated per 1000 male']+ '<br>' +\
+
 #name_stat
 
 
@@ -218,10 +220,13 @@ def dashh(val):
         'unvaccinated population vaccinated today'
     else:
         vi=''
-    if val!='% of total people(18+) fully vaccinated' and val!='Todays avg doses per center':
+    if val=='Vaccination Gender Parity Index':
+        claim='Based on doses given to Female per'+  '<br>' +\
+        '1000 Male normalized to sex ratio among 18+'
+    elif val!='% of total people(18+) fully vaccinated' and val!='Todays avg doses per center':
         claim='*Data based on atleast single dose vaccinated people.'
-    else:
-        claim=''
+    
+        
     zz=dfg[val]    
     fig1 = go.Figure(data=go.Choropleth(
         geojson="https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson",
@@ -319,7 +324,7 @@ def dashh(val):
 fig1=dashh('Todays Doses(45+) utilization %')
 left_column_2, right_column_2 = st.beta_columns(2)
 with left_column_2:
-    val = st.selectbox('Select parameter', ['% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 70% coverage(18+) at last 7 days speed','% of total people(18+) fully vaccinated','Adult population per Active Vaccination Center','Todays avg doses per center','Todays Doses(45+) utilization %','Todays Doses(18-44) utilization %'])
+    val = st.selectbox('Select parameter', ['% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 70% coverage(18+) at last 7 days speed','% of total people(18+) fully vaccinated','Adult population per Active Vaccination Center','Vaccination Gender Parity Index','Todays avg doses per center','Todays Doses(45+) utilization %','Todays Doses(18-44) utilization %'])
 #% of 45+ people vaccinated','Last 7 days avg per 100 people(45+)','Days to get 70% coverage(45+) at last 7 days speed','Todays Doses(45+) utilization %','% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)','Todays Doses(18-44) utilization %','Todays Priortization Index','Vaccination Gender Parity Index','Female vaccinated per 1000 male', ,'Vaccination Index'   
     fig1=dashh(val)
 st.plotly_chart(fig1)
@@ -454,7 +459,7 @@ with left_column_1:
 st.write(str(sum(df['slots']))+' doses(45 group) and '+str(sum(df['slots 18-44']))+'('+str(sum(df['paid slot']))+' paid slots) doses(18-44 group) went unutilized on '+td)#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
 df.rename(columns=rename_mapping, inplace=True)
 with center_column_1:
-    sort_inp = st.selectbox('Sort by', ['Unutilized Doses (45+)','Doses Administered (45+)','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18+)','People (18+) vaccinated till date'] )
+    sort_inp = st.selectbox('Sort by', ['Unutilized Doses (45+)','Doses Administered (45+)','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18+)','People (18+) vaccinated till date','Doses given to Female  per 1000 male'] )
     if sort_inp != "":
         df= df.sort_values(by=sort_inp, ascending=False)
 #'Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male'    
@@ -465,7 +470,7 @@ table.reset_index(inplace=True, drop=True)
 xxx=df.describe()
 #xxx
 st.table(table)
-st.info('Methodology:calculating unutilized doses from available slots in all districts for the same day from appointment api after 10pm or time duration mentioned and vaccinated people on that day in all districts from report api of CoWIN portal. So it is prone to error due to api cache & cowin usability by districts and states! Vaccination Gender parity Index= (Female Vaccinated per 1000 Male)/(Female population per 1000 male among 18+ as on 2021 projected from census 2011)')
+st.info('Methodology:calculating unutilized doses from available slots in all districts for the same day from appointment api after 10pm or time duration mentioned and vaccinated people on that day in all districts from report api of CoWIN portal. So it is prone to error due to api cache & cowin usability by districts and states! Vaccination Gender parity Index= (Doses given to female per 1000 Male)/(Female population per 1000 male among 18+ as on 2021 projected from census 2011)')
     
 
 pageviews=Pageviews()
