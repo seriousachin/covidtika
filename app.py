@@ -223,7 +223,9 @@ def dashh(val):
     if val=='Vaccination Gender Parity Index':
         claim='Based on doses given to Female per'+  '<br>' +\
         '1000 Male normalized to sex ratio among 18+'
-    elif val!='% of total people(18+) fully vaccinated' and val!='Todays avg doses per center':
+    elif val=='% of total people(18+) fully vaccinated' or val=='Todays avg doses per center':
+        claim=''
+    else:
         claim='*Data based on atleast single dose vaccinated people.'
     
         
