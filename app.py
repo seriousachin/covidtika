@@ -465,7 +465,7 @@ with center_column_1:
     if sort_inp != "":
         df= df.sort_values(by=sort_inp, ascending=False)
 #'Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male'    
-table = deepcopy(df[['District','Unutilized Doses (45+)','Doses Administered (45+)','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18+)','People (18+) vaccinated till date']])
+table = deepcopy(df[['District','Unutilized Doses (45+)','Doses Administered (45+)','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18+)','People (18+) vaccinated till date','Doses given to Female  per 1000 male']])
 #'District','Unutilized Doses (45+)','Doses Administered (45+)','Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male'
 
 table.reset_index(inplace=True, drop=True)
