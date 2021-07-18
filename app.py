@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='17 July'
+td='18 July'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("717.csv",index_col = False)
+    df = pd.read_csv("718.csv",index_col = False)
     return df
 
 
@@ -62,7 +62,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
-st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses. Status as on 17 July 2021 , 11:47-11:55PM from CoWIN. ')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses. Status as on 18 July 2021 , 11:06-11:15PM from CoWIN. ')
 st.info('25 June Update: By mistake or knowingly, CoWin Dashboard has stopped giving data on Number of Female/male and Number of 18-44/45+ people being vaccinated, rather they are giving number of doses provided to them. So we are unable to show age, gender specific analysis. We are very sorry for that.')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
@@ -134,7 +134,7 @@ for i in range(0,36):
                    'Total People(18+) vaccinated till date':sum(dfs['people']),
                   'Days to get 70% coverage(18+) at last 7 days speed':round(max((0.7*(ppp[i])-sum(dfs['people']))/(sum(dfs['avg people'])),0)),
      '% of total people(18+) fully vaccinated':round(100*sum(dfs['fully'])/(ppp[i]),2),
-     'Todays Priortization Index':max(round((sum(dfs['today'])/(pp[i]-sum(dfs['Total doses til date'])+sum(dfs['today'])))/(sum(dfs['today 18'])/(pp1[i]-sum(dfs['Total doses til date 18'])+sum(dfs['today 18']))),2),0),
+   #  'Todays Priortization Index':max(round((sum(dfs['today'])/(pp[i]-sum(dfs['Total doses til date'])+sum(dfs['today'])))/(sum(dfs['today 18'])/(pp1[i]-sum(dfs['Total doses til date 18'])+sum(dfs['today 18']))),2),0),
                   'Total People vaccinated today':sum(dfs['today'])+sum(dfs['today 18']),
                   'Adult population per Active Vaccination Center':int(round((ppp[i])/sum(dfs['sites']),0)),
                   'Todays avg doses per center':round((sum(dfs['today 18'])+sum(dfs['today']))/sum(dfs['sites']))})
