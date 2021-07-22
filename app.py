@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("720.csv",index_col = False)
+    df = pd.read_csv("721.csv",index_col = False)
     return df
 
 
