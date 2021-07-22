@@ -108,7 +108,7 @@ for i in range(0,36):
      '% of total people(18+) fully vaccinated':round(100*sum(dfs['fully'])/(ppp[i]),2),
      'Todays Priortization Index':0,
                   'Total People vaccinated today':sum(dfs['today'])+sum(dfs['today 18']),
-                  'Adult population per Active Vaccination Center':int(round((ppp[i])/sum(dfs['sites']),0)),
+                  'Adult population per Active Vaccination Center':0,
                   'Todays avg doses per center':0})
     elif sum(dfs['slots'])+sum(dfs['today'])==0:
         ff.append({'state':name_stat[i],'Todays Doses utilization %':100,'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),
