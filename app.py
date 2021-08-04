@@ -330,7 +330,7 @@ def dashh(val):
 fig1=dashh('Todays Doses utilization %')
 left_column_2, right_column_2 = st.beta_columns(2)
 with left_column_2:
-    val = st.selectbox('Select parameter', ['% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 70% coverage(18+) at last 7 days speed','% of total people(18+) fully vaccinated','Days to get 70% fully vaccinated(18+) at last 7 days speed','Adult population per Active Vaccination Center','Vaccination Gender Parity Index','Todays avg doses per center','Todays Doses utilization %'])
+    val = st.selectbox('Select parameter', ['% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 70% coverage(18+) at last 7 days speed','% of total people(18+) fully vaccinated','Adult population per Active Vaccination Center','Vaccination Gender Parity Index','Todays avg doses per center','Todays Doses utilization %'])
 #% of 45+ people vaccinated','Last 7 days avg per 100 people(45+)','Days to get 70% coverage(45+) at last 7 days speed','Todays Doses(45+) utilization %','% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)','Todays Doses(18-44) utilization %','Todays Priortization Index','Vaccination Gender Parity Index','Female vaccinated per 1000 male', ,'Vaccination Index' 'Todays Doses utilization %'  
     fig1=dashh(val)
 st.plotly_chart(fig1)
