@@ -340,7 +340,7 @@ def ttt(val):
     fig2.update_traces(textposition='outside',hovertext='none')
     #fig2.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
     return fig2
-left_column_2, right_column_2 = st.columns(2)
+left_column_2, right_column_2 = st.beta_columns(2)
 with left_column_2:
     val = st.selectbox('Select parameter', ['% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 80% coverage(18+) at last 7 days speed','% of total people(18+) fully vaccinated','Adult population per Active Vaccination Center','Vaccination Gender Parity Index','Todays avg doses per center'])
 #% of 45+ people vaccinated','Last 7 days avg per 100 people(45+)','Days to get 80% coverage(45+) at last 7 days speed','Todays Doses(45+) utilization %','% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)','Todays Doses(18-44) utilization %','Todays Priortization Index','Vaccination Gender Parity Index','Female vaccinated per 1000 male', ,'Vaccination Index' 'Todays Doses utilization %'  
@@ -462,7 +462,7 @@ valid_states = list(np.unique(mappingdf["state"].values))
 # numdays = st.sidebar.slider('Select Date Range', 0, 100, 10)
 #unique_districts = list(mappingdf["district"].unique())
 #unique_districts.sort()
-left_column_1, center_column_1,right_column_1 = st.columns(3)
+left_column_1, center_column_1,right_column_1 = st.beta_columns(3)
 with left_column_1:
     state_inp = st.selectbox('Select State', [""] + valid_states)
     if state_inp != "":
