@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='16 October'
+td='17 October'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("1016.csv",index_col = False)
+    df = pd.read_csv("1017.csv",index_col = False)
     return df
 
 
@@ -82,7 +82,6 @@ uind={'% of 45+ people vaccinated':round(100*sum(df['Total doses til date'])/sum
      'Today Dose wastage %':round(100*sum(df['wastage'])/(sum(df['today 18'])+sum(df['today'])),2),
      'Female vaccinated per 1000 male':int(round(sum(df['female'])*1000/sum(df['male']),0)),
      'Vaccination Gender Parity Index':round(sum(df['female'])*1000/(sum(df['male'])*944),3),
-     'Vaccination District Variation Index':round((min(df['avgdaily 18-44'])+min(df['avgdaily']))/(max(df['avgdaily'])+max(df['avgdaily 18-44'])),4),
      '% of total people(18+) vaccinated':round(100*(sum(df['people']))/(sum(ppp)),2),
      'Last 7 days avg per 100 people(18+)':round(100*(sum(df['avg people']))/(sum(ppp)),2),
      'Days to get 80% coverage(18+) at last 7 days speed':round(max((0.8*(sum(ppp))-sum(df['people']))/(sum(df['avg people'])),0)),
@@ -90,7 +89,8 @@ uind={'% of 45+ people vaccinated':round(100*sum(df['Total doses til date'])/sum
      '% of total people(18+) fully vaccinated':round(100*sum(df['fully'])/(sum(ppp)),2),
      'Todays Priortization Index':round((sum(df['today'])/(sum(pp)-sum(df['Total doses til date'])+sum(df['today'])))/(sum(df['today 18'])/(sum(pp1)-sum(df['Total doses til date 18'])+sum(df['today 18']))),2),
       'Adult population per Active Vaccination Center':int(round((sum(ppp))/sum(df['sites']),0)),
-      'Todays avg doses per center':round((sum(df['today 18'])+sum(df['today']))/sum(df['sites']))
+      'Todays avg doses per center':round((sum(df['today 18'])+sum(df['today']))/sum(df['sites'])),
+      'Second dose conversion ratio': round(sum(df['fully'])/sum(df['dcon']),2)
      }
 for i in range(0,36):
     dfs=df.loc[df['state'] == name_stat[i]]
@@ -98,7 +98,6 @@ for i in range(0,36):
         ff.append({'state':name_stat[i],'Todays Doses utilization %':100,'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),
  'Days to get 80% coverage(45+) at last 7 days speed':int(max(((0.8*pp[i])-sum(dfs['Total doses til date']))/sum(dfs['avgdaily']),0)), 'vaccinated today 18-44':sum(dfs['today 18']),'Last 7 days avg per 100 people(18-44)':round(100*sum(dfs['avgdaily 18-44'])/pp1[i],2),'7 days daily avg 18-44':sum(dfs['avgdaily 18-44']),'% of 18-44 people vaccinated':round(100*sum(dfs['Total doses til date 18'])/pp1[i],2) ,'People(18-44) vaccinated till date':sum(dfs['Total doses til date 18']),'Female vaccinated per 1000 male':int(round(sum(dfs['female'])*1000/sum(dfs['male']),0)),
                   'Vaccination Gender Parity Index':round(sum(dfs['female'])*1000/(sum(dfs['male'])*sr[i]),3),
-     'Vaccination District Variation Index':round((min(dfs['avgdaily 18-44'])+min(dfs['avgdaily']))/(max(dfs['avgdaily'])+max(dfs['avgdaily 18-44'])),4),
                   '% of total people(18+) vaccinated':round(100*(sum(dfs['people']))/(ppp[i]),2),
                   'Last 7 days avg per 100 people(18+)':round(100*(sum(dfs['avg people']))/(ppp[i]),2),
                    'Total People(18+) vaccinated till date':sum(dfs['people']),
@@ -107,13 +106,13 @@ for i in range(0,36):
      '% of total people(18+) fully vaccinated':round(100*sum(dfs['fully'])/(ppp[i]),2),
      'Todays Priortization Index':0,
                   'Total People vaccinated today':sum(dfs['today'])+sum(dfs['today 18']),
+                   'Second dose conversion ratio': round(sum(dfs['fully'])/sum(dfs['dcon']),3),
                   'Adult population per Active Vaccination Center':0,
                   'Todays avg doses per center':0})
     elif sum(dfs['today'])==0:
         ff.append({'state':name_stat[i],'Todays Doses utilization %':100,'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),
  'Days to get 80% coverage(45+) at last 7 days speed':int(max(((0.8*pp[i])-sum(dfs['Total doses til date']))/sum(dfs['avgdaily']),0)), 'vaccinated today 18-44':sum(dfs['today 18']),'Last 7 days avg per 100 people(18-44)':round(100*sum(dfs['avgdaily 18-44'])/pp1[i],2),'7 days daily avg 18-44':sum(dfs['avgdaily 18-44']),'% of 18-44 people vaccinated':round(100*sum(dfs['Total doses til date 18'])/pp1[i],2) ,'People(18-44) vaccinated till date':sum(dfs['Total doses til date 18']),'Female vaccinated per 1000 male':int(round(sum(dfs['female'])*1000/sum(dfs['male']),0)),
                   'Vaccination Gender Parity Index':round(sum(dfs['female'])*1000/(sum(dfs['male'])*sr[i]),3),
-     'Vaccination District Variation Index':round((min(dfs['avgdaily 18-44'])+min(dfs['avgdaily']))/(max(dfs['avgdaily'])+max(dfs['avgdaily 18-44'])),4),
                   '% of total people(18+) vaccinated':round(100*(sum(dfs['people']))/(ppp[i]),2),
                  'Last 7 days avg per 100 people(18+)':round(100*(sum(dfs['avg people']))/(ppp[i]),2),
                    'Total People(18+) vaccinated till date':sum(dfs['people']),
@@ -122,13 +121,14 @@ for i in range(0,36):
      '% of total people(18+) fully vaccinated':round(100*sum(dfs['fully'])/(ppp[i]),2),
      'Todays Priortization Index':max(round((sum(dfs['today'])/(pp[i]-sum(dfs['Total doses til date'])+sum(dfs['today'])))/(sum(dfs['today 18'])/(pp1[i]-sum(dfs['Total doses til date 18'])+sum(dfs['today 18']))),2),0),
                   'Total People vaccinated today':sum(dfs['today'])+sum(dfs['today 18']),
+                   'Second dose conversion ratio': round(sum(dfs['fully'])/sum(dfs['dcon']),3),
                   'Adult population per Active Vaccination Center':int(round((ppp[i])/sum(dfs['sites']),0)),
                   'Todays avg doses per center':round((sum(dfs['today 18'])+sum(dfs['today']))/sum(dfs['sites']))})
     elif sum(dfs['today 18'])==0:
         ff.append({'state':name_stat[i],'Todays Doses utilization %':100,'vaccinated today':sum(dfs['today']),'Last 7 days avg per 100 people(45+)':round(100*sum(dfs['avgdaily'])/pp[i],2),'7 days daily avg':sum(dfs['avgdaily']),'% of 45+ people vaccinated':round(100*sum(dfs['Total doses til date'])/pp[i],2) ,'People vaccinated till date':sum(dfs['Total doses til date']),
  'Days to get 80% coverage(45+) at last 7 days speed':int(max(((0.8*pp[i])-sum(dfs['Total doses til date']))/sum(dfs['avgdaily']),0)), 'Last 7 days avg per 100 people(18-44)':round(100*sum(dfs['avgdaily 18-44'])/pp1[i],2),'7 days daily avg 18-44':sum(dfs['avgdaily 18-44']),'% of 18-44 people vaccinated':round(100*sum(dfs['Total doses til date 18'])/pp1[i],2) ,'People(18-44) vaccinated till date':sum(dfs['Total doses til date 18']),'Female vaccinated per 1000 male':int(round(sum(dfs['female'])*1000/sum(dfs['male']),0)),
                   'Vaccination Gender Parity Index':round(sum(dfs['female'])*1000/(sum(dfs['male'])*sr[i]),3),
-     'Vaccination District Variation Index':round((min(dfs['avgdaily 18-44'])+min(dfs['avgdaily']))/(max(dfs['avgdaily'])+max(dfs['avgdaily 18-44'])),4),
+                   'Second dose conversion ratio': round(sum(dfs['fully'])/sum(dfs['dcon']),3),
                   '% of total people(18+) vaccinated':round(100*(sum(dfs['people']))/(ppp[i]),2),
                   'Last 7 days avg per 100 people(18+)':round(100*(sum(dfs['avg people']))/(ppp[i]),2),
                    'Total People(18+) vaccinated till date':sum(dfs['people']),
@@ -144,9 +144,9 @@ for i in range(0,36):
 'Days to get 80% coverage(45+) at last 7 days speed':int(max(((0.8*pp[i])-sum(dfs['Total doses til date']))/sum(dfs['avgdaily']),0)),                   
 'vaccinated today 18-44':sum(dfs['today 18']),'Last 7 days avg per 100 people(18-44)':round(100*sum(dfs['avgdaily 18-44'])/pp1[i],2),'7 days daily avg 18-44':sum(dfs['avgdaily 18-44']),'% of 18-44 people vaccinated':round(100*sum(dfs['Total doses til date 18'])/pp1[i],2) ,'People(18-44) vaccinated till date':sum(dfs['Total doses til date 18']),'Female vaccinated per 1000 male':int(round(sum(dfs['female'])*1000/sum(dfs['male']),0)),
                   'Vaccination Gender Parity Index':round(sum(dfs['female'])*1000/(sum(dfs['male'])*sr[i]),3),
-     'Vaccination District Variation Index':round((min(dfs['avgdaily 18-44'])+min(dfs['avgdaily']))/(max(dfs['avgdaily'])+max(dfs['avgdaily 18-44'])),4),
                   '% of total people(18+) vaccinated':round(100*(sum(dfs['people']))/(ppp[i]),2),
                   'Last 7 days avg per 100 people(18+)':round(100*(sum(dfs['avg people']))/(ppp[i]),2),
+                   'Second dose conversion ratio': round(sum(dfs['fully'])/sum(dfs['dcon']),3),
                    'Total People(18+) vaccinated till date':sum(dfs['people']),
                   'Days to get 80% coverage(18+) at last 7 days speed':round(max((0.8*(ppp[i])-sum(dfs['people']))/(sum(dfs['avg people'])),0)),
                    'Days to get 70% fully vaccinated(18+) at last 7 days speed':round(max((0.7*(ppp[i])-sum(dfs['fully']))/(sum(dfs['avgf'])),0)),
@@ -222,6 +222,9 @@ def dashh(val):
     if val=='Vaccination Gender Parity Index':
         claim='Based on doses given to Female per 1000'+  '<br>' +\
         'doses to Male normalized to sex ratio among 18+'
+    elif val=='Second dose conversion ratio':
+        claim="Ratio of people fully vaccinated till today to people"+'<br>' +\
+        "vaccinated atleast with first dose 84days back"
     elif val=='% of total people(18+) fully vaccinated' or val=='Todays avg doses per center' or val=='Days to get 70% fully vaccinated(18+) at last 7 days speed':
         claim=''
     else:
@@ -329,20 +332,30 @@ def dashh(val):
 fig1=dashh('% of total people(18+) vaccinated')
 #fig2=dashh2('% of total people(18+) vaccinated')
 def ttt(val):
+    if val=='Vaccination Gender Parity Index':
+        claim='Based on doses given to Female per 1000'+  '<br>' +\
+        'doses to Male normalized to sex ratio among 18+'
+    elif val=='Second dose conversion ratio':
+        claim="Ratio of people fully vaccinated till today to people"+'<br>' +\
+        "vaccinated atleast with first dose 84days back"
+    elif val=='% of total people(18+) fully vaccinated' or val=='Todays avg doses per center' or val=='Days to get 70% fully vaccinated(18+) at last 7 days speed':
+        claim=''
+    else:
+        claim='*Data based on atleast single dose vaccinated people.'
     tl=dfg[["state",val]]
     tl.loc[tl.state=="Dadra and Nagar Haveli and Daman and Diu", 'state'] = "DNHDD"
     tl[val]=tl[val].astype(float)
     #df = px.tl.tips()
-    fig2 = px.bar(tl,x=val, y='state',text=val,title=val +"(All India: "+str(uind[val])+" as on "+td+")",orientation='h',height=700, labels={
+    fig2 = px.bar(tl,x=val, y='state',text=val,title=val +"(All India: "+str(uind[val])+" as on "+td+")",orientation='h',height=760, labels={
                      "state": "",
-                     val: "By Sachin Pandey @serioussachin, https://covidtika.herokuapp.com &CoWIN",
+                     val: "By Sachin Pandey @serioussachin, https://covidtika.herokuapp.com &CoWIN"+'<br>' +claim,
                  })
     fig2.update_traces(textposition='outside',hovertext='none')
     #fig2.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
     return fig2
 left_column_2, right_column_2 = st.beta_columns(2)
 with left_column_2:
-    val = st.selectbox('Select parameter', ['% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 80% coverage(18+) at last 7 days speed','% of total people(18+) fully vaccinated','Days to get 70% fully vaccinated(18+) at last 7 days speed','Adult population per Active Vaccination Center','Vaccination Gender Parity Index','Todays avg doses per center'])
+    val = st.selectbox('Select parameter', ['% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 80% coverage(18+) at last 7 days speed','% of total people(18+) fully vaccinated','Days to get 70% fully vaccinated(18+) at last 7 days speed','Second dose conversion ratio','Adult population per Active Vaccination Center','Vaccination Gender Parity Index','Todays avg doses per center'])
 #% of 45+ people vaccinated','Last 7 days avg per 100 people(45+)','Days to get 80% coverage(45+) at last 7 days speed','Todays Doses(45+) utilization %','% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)','Todays Doses(18-44) utilization %','Todays Priortization Index','Vaccination Gender Parity Index','Female vaccinated per 1000 male', ,'Vaccination Index' 'Todays Doses utilization %'  
     fig1=dashh(val)
     fig2=ttt(val)
