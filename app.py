@@ -34,7 +34,7 @@ def filter_capacity(df, col, value):
     return df_temp
 mappingdf=dd()
 df= mappingdf.sort_values(by='avgdaily', ascending=False)
-
+df['sdc']=round(df['fully']/df['dcon'],3)
 @st.cache(allow_output_mutation=True)
 def Pageviews():
     return []
@@ -56,7 +56,8 @@ rename_mapping = {
     'avgdaily 18-44': 'Last 7 days Daily Avg Vaccination (18-44)',
     'gratio':'Doses given to Female  per 1000 male',
     'avg people':'Last 7 days Daily Avg Vaccination (18+)',
-    'people':'People (18+) vaccinated till date'
+    'people':'People (18+) vaccinated till date',
+    'sdc':'Second Dose Conversion'
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
@@ -158,12 +159,12 @@ for i in range(0,36):
 dfg = pd.DataFrame(ff)
 #tdg = deepcopy(dfg[['state','Vaccination District Variation Index']])
 #tdg.reset_index(inplace=True, drop=True)
-dfg['Vaccination Index']=round(0.5*dfg['% of 45+ people vaccinated']+0.2*dfg['% of 18-44 people vaccinated']+11*dfg['Last 7 days avg per 100 people(45+)']+4*dfg['Last 7 days avg per 100 people(18-44)']+5*dfg['Vaccination Gender Parity Index']+0.25*dfg['% of total people(18+) fully vaccinated'],2)
-uind['Vaccination Index']=round(0.50*uind['% of 45+ people vaccinated']+0.2*uind['% of 18-44 people vaccinated']+11*uind['Last 7 days avg per 100 people(45+)']+4*uind['Last 7 days avg per 100 people(18-44)']+5*uind['Vaccination Gender Parity Index']+0.25*uind['% of total people(18+) fully vaccinated'],2)
+dfg['Vaccination Index']=round(0.50*dfg['% of total people(18+) vaccinated']+10*dfg['Last 7 days avg per 100 people(18+)']+10*dfg['Vaccination Gender Parity Index']+15*dfg['Second dose conversion ratio']+0.25*dfg['% of total people(18+) fully vaccinated'],2)
+uind['Vaccination Index']=round(0.50*uind['% of total people(18+) vaccinated']+10*uind['Last 7 days avg per 100 people(18+)']+10*uind['Vaccination Gender Parity Index']+15*uind['Second dose conversion ratio']+0.25*uind['% of total people(18+) fully vaccinated'],2)
 #dfg['Vaccine Takers Parity Index(45+ vs 18-44 last 7days)'] = np.where(dfg['Last 7 days avg per 100 people(18-44)'] < 1, dfg['Last 7 days avg per 100 people(18-44)']/dfg['Last 7 days avg per 100 people(18-44)'], dfg['Last 7 days avg per 100 people(18-44)']/dfg['Last 7 days avg per 100 people(18-44)'])
 #indd
-dfg['Add Doses']=(dfg['People vaccinated till date']*70/dfg['% of 45+ people vaccinated'])-dfg['People vaccinated till date']
-ssss=dfg[['state','Add Doses']]
+
+
 
 
 
@@ -209,9 +210,9 @@ def dashh(val):
         cs=False
     if val=='Vaccination Index':
         vi='Vaccination Index is calculated'+  '<br>' +\
-        'on coverage & speed  in'+  '<br>' +\
-        '45+(50%) & 18-44(20%) group, '+  '<br>' +\
-        'Gender Parity(5%) & Fully Vaccinated(25%) '
+        'on coverage & speed  as'+  '<br>' +\
+        'Second dose rate(15%), first dose(50%)'+  '<br>' +\
+        'Gender Parity(10%) & Fully Vaccinated(25%) '
     elif val=='Todays Priortization Index':
         vi='Todays Priortization Index is calculated'+  '<br>' +\
         'as % of 45+ unvaccinated population '+  '<br>' +\
@@ -355,7 +356,7 @@ def ttt(val):
     return fig2
 left_column_2, right_column_2 = st.beta_columns(2)
 with left_column_2:
-    val = st.selectbox('Select parameter', ['% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 80% coverage(18+) at last 7 days speed','% of total people(18+) fully vaccinated','Days to get 70% fully vaccinated(18+) at last 7 days speed','Second dose conversion ratio','Adult population per Active Vaccination Center','Vaccination Gender Parity Index','Todays avg doses per center'])
+    val = st.selectbox('Select parameter', ['% of total people(18+) vaccinated','Last 7 days avg per 100 people(18+)','Days to get 80% coverage(18+) at last 7 days speed','% of total people(18+) fully vaccinated','Days to get 70% fully vaccinated(18+) at last 7 days speed','Second dose conversion ratio','Vaccination Index','Adult population per Active Vaccination Center','Vaccination Gender Parity Index','Todays avg doses per center'])
 #% of 45+ people vaccinated','Last 7 days avg per 100 people(45+)','Days to get 80% coverage(45+) at last 7 days speed','Todays Doses(45+) utilization %','% of 18-44 people vaccinated','Last 7 days avg per 100 people(18-44)','Todays Doses(18-44) utilization %','Todays Priortization Index','Vaccination Gender Parity Index','Female vaccinated per 1000 male', ,'Vaccination Index' 'Todays Doses utilization %'  
     fig1=dashh(val)
     fig2=ttt(val)
@@ -494,11 +495,11 @@ with left_column_1:
 #st.write(str(sum(df['slots']))+'('+str(sum(df['paid slot']))+' paid slots) doses went unutilized on '+td)#Total vaccinated till date:'+str(sum(df['Total doses til date'])))
 df.rename(columns=rename_mapping, inplace=True)
 with center_column_1:
-    sort_inp = st.selectbox('Sort by', ['Doses Administered (45+)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18+)','People (18+) vaccinated till date','Doses given to Female  per 1000 male'] )
+    sort_inp = st.selectbox('Sort by', ['Doses Administered (45+)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18+)','People (18+) vaccinated till date','Doses given to Female  per 1000 male','Second Dose Conversion'] )
     if sort_inp != "":
         df= df.sort_values(by=sort_inp, ascending=False)
 #'Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male'    
-table = deepcopy(df[['District','Doses Administered (45+)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18+)','People (18+) vaccinated till date','Doses given to Female  per 1000 male']])
+table = deepcopy(df[['District','Doses Administered (45+)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18+)','People (18+) vaccinated till date','Doses given to Female  per 1000 male','Second Dose Conversion']])
 #,'Unutilized doses''District','Unutilized Doses (45+)','Doses Administered (45+)','Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male'
 
 table.reset_index(inplace=True, drop=True)
