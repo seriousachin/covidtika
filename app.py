@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='7 November'
+td='10 November'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("1107.csv",index_col = False)
+    df = pd.read_csv("1110.csv",index_col = False)
     return df
 
 
@@ -352,6 +352,7 @@ def ttt(val):
                      val: "By Sachin Pandey @serioussachin, https://covidtika.herokuapp.com &CoWIN"+'<br>' +claim,
                  })
     fig2.update_traces(textposition='outside',hovertext='none')
+    fig2.update_layout(barmode='stack', yaxis={'categoryorder':'total descending'})
     #fig2.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
     return fig2
 left_column_2, right_column_2 = st.beta_columns(2)
@@ -497,7 +498,7 @@ df.rename(columns=rename_mapping, inplace=True)
 with center_column_1:
     sort_inp = st.selectbox('Sort by', ['Doses Administered (45+)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18+)','People (18+) vaccinated till date','Doses given to Female  per 1000 male','Second Dose Conversion'] )
     if sort_inp != "":
-        df= df.sort_values(by=sort_inp, ascending=False)
+        df= df.sort_values(by=sort_inp, ascending=True)
 #'Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male'    
 table = deepcopy(df[['District','Doses Administered (45+)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18+)','People (18+) vaccinated till date','Doses given to Female  per 1000 male','Second Dose Conversion']])
 #,'Unutilized doses''District','Unutilized Doses (45+)','Doses Administered (45+)','Last 7 days Daily Avg Vaccination (45+)','People (45+) vaccinated till date','Unutilized Doses (18-44)','Doses Administered (18-44)','Last 7 days Daily Avg Vaccination (18-44)','People (18-44) vaccinated till date','Female vaccinated per 1000 male'
