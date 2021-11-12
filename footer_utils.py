@@ -56,7 +56,7 @@ def layout(*args):
 
 def footer(inp_views):
     myargs = [
-        "views- ", str(inp_views +21976),
+        "views- ", str(inp_views +33976),
         ". Created by  ",
         link("https://twitter.com/serioussachin", "Sachin Pandey"),"   ","  ",
         
