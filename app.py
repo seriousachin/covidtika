@@ -13,7 +13,7 @@ from footer_utils import image, link, layout, footer
 
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 # browser_header = {'User-Agent': 'Mozilla/5.0 (Linux; Android 10; ONEPLUS A6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.99 Mobile Safari/537.36'}
-td='26 December'
+td='31 December'
 st.set_page_config(layout='wide',
                    #initial_sidebar_state='collapsed',
                    page_icon="https://students.iiserkol.ac.in/~sp13ip016/favicon.ico",
@@ -21,7 +21,7 @@ st.set_page_config(layout='wide',
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True)
 def dd():
-    df = pd.read_csv("1226.csv",index_col = False)
+    df = pd.read_csv("1231.csv",index_col = False)
     return df
 
 
@@ -61,7 +61,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
-st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses. Status as on 26 Dec  2021 from CoWIN. ')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses. Status as on 31 Dec  2021 from CoWIN. ')
 st.info('25 June Update: By mistake or knowingly, CoWin Dashboard has stopped giving data on Number of Female/male and Number of 18-44/45+ people being vaccinated, rather they are giving number of doses provided to them. So we are unable to show age, gender specific analysis. We are very sorry for that.')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
@@ -161,6 +161,7 @@ dfg = pd.DataFrame(ff)
 #tdg = deepcopy(dfg[['state','Vaccination District Variation Index']])
 #tdg.reset_index(inplace=True, drop=True)
 dfg['Vaccination Index']=round(0.50*dfg['% of total people(18+) vaccinated']+10*dfg['Last 7 days avg per 100 people(18+)']+10*dfg['Vaccination Gender Parity Index']+15*dfg['Second dose conversion ratio']+0.25*dfg['% of total people(18+) fully vaccinated'],2)
+#dfg['% of adults not taken 1st dose']=Max(1-,0)
 uind['Vaccination Index']=round(0.50*uind['% of total people(18+) vaccinated']+10*uind['Last 7 days avg per 100 people(18+)']+10*uind['Vaccination Gender Parity Index']+15*uind['Second dose conversion ratio']+0.25*uind['% of total people(18+) fully vaccinated'],2)
 #dfg['Vaccine Takers Parity Index(45+ vs 18-44 last 7days)'] = np.where(dfg['Last 7 days avg per 100 people(18-44)'] < 1, dfg['Last 7 days avg per 100 people(18-44)']/dfg['Last 7 days avg per 100 people(18-44)'], dfg['Last 7 days avg per 100 people(18-44)']/dfg['Last 7 days avg per 100 people(18-44)'])
 #indd
