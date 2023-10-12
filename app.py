@@ -61,7 +61,7 @@ rename_mapping = {
     }
 
 st.title('Covid Tika Daily Utilization, Coveragae, Speed Tracker : '+td)
-st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses. Status as on 31 Dec  2021 from CoWIN. ')
+st.write('Tracking daily (non) Utilization, Coverage, Speed, Gender gap, District variations of Covid-19 vaccine doses. Status as on 31 Dec  2021 from CoWIN. STOPPED ON 1 Jan 2022')
 st.info('25 June Update: By mistake or knowingly, CoWin Dashboard has stopped giving data on Number of Female/male and Number of 18-44/45+ people being vaccinated, rather they are giving number of doses provided to them. So we are unable to show age, gender specific analysis. We are very sorry for that.')
 #dfg = pd.read_csv("map.csv")
 #ff=df.sort_values(by='utilization %', ascending=True)
